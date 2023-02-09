@@ -3,6 +3,7 @@
 ## The Data Engineering Lifecycle
 
 Explain each stage of DE lifecycle.
+
 ```
 - Generation
 - Storage
@@ -10,8 +11,11 @@ Explain each stage of DE lifecycle.
 - Transformation
 - Serving data
 ```
+---
 
+Name undercurrents of the data engineering lifecycle.
 
+```
 The undercurrents of the data engineering lifecycle are the following:
 • Security
 • Data management
@@ -19,7 +23,8 @@ The undercurrents of the data engineering lifecycle are the following:
 • Data architecture
 • Orchestration
 • Software engineering
-
+```
+---
 
 ## Generation
 Key engineering considerations for generation.
@@ -35,6 +40,7 @@ Key engineering considerations for generation.
 - How frequently should data be pulled from the source system?
 - Will reading from a data source impact its performance?
 ```
+---
 
 ## Storage
 
@@ -91,15 +97,12 @@ where the data is transformed within the stream itself?
 
 Batch versus streaming versus micro-batching
 
-
 ```
 Batch ingestion is simply a specialized and convenient way of processing this stream in large chunks—for example, handling a full day’s worth of data in a single batch.
 
 Streaming ingestion allows us to provide data to downstream systems—whether other applications, databases, or analytics systems—in a continuous, real-time fashion. Here, real-time (or near real-time) means that the data is available to a downstream system a short time after it is produced (e.g., less than one second later). The latency required to qualify as real-time varies by domain and requirements.
 
-
-Do I need millisecond real-time data ingestion? Or would a micro-batch
-approach work, accumulating and ingesting data, say, every minute?
+Micro-batching is ex. Spark Streaming with data taken from 1 second period.
 ```
 ---
 
@@ -127,20 +130,8 @@ Examples of transformations
 - large-scale aggregation for reporting
 - featurize data for ML processes
 - record within a streaming pipeline may be “enriched” with additional fields and calculations
-
-
-Or a record within a streaming pipeline may be “enriched” with additional
-fields and calculations before it’s sent to a data warehouse. Transformations are
-ubiquitous in various parts of the lifecycle. Data preparation, data wrangling, and
-cleaning—these transformative tasks add value for end consumers of data.
-
-Data featurization for ML is another data transformation process. Featurization
-intends to extract and enhance data features useful for training ML models.
 ```
-
-Key engineering considerations for the transformation phase
-
-
+---
 
 ## Serving Data
 
@@ -149,35 +140,47 @@ What does it mean that data has value?
 ```
 Data has value when it’s used for practical purposes. Data that is not consumed or queried is simply inert.
 ```
+---
 
 Multitenancy
 ```
 Many current storage and analytics systems support multitenancy in various ways. Data engineers may choose to house data for many customers in common tables to allow a unified view for internal analytics and ML. This data is presented externally to individual customers through logical views with appropriately defined controls and filters. It is incumbent on data engineers to understand the minutiae of multitenancy in the systems they deploy to ensure absolute data security and isolation.
 ```
-
+---
 
 Reverse ETL
 ```
 Reverse ETL has long been a practical reality in data, viewed as an antipattern that we didn’t like to talk about or dignify with a name. Reverse ETL takes processed data from the output side of the data engineering lifecycle and feeds it back into source systems, as shown in Figure 2-6. In reality, this flow is beneficial and often necessary; reverse ETL allows us to take analytics, scored models, etc., and feed these back into production systems or SaaS platforms.
 ```
+---
 
 Name security good practices.
 
-The principle of least privilege means giving a user or system access to only the essential data and resources to perform an intended function
+```
+- The principle of least privilege means giving a user or system access to only the essential data and resources to perform an intended function
 
-The first line of defense for data security is to create a culture of security that permeates the organization. All individuals who have access to data must understand their responsibility in protecting the company’s sensitive data and its customers.
+- The first line of defense for data security is to create a culture of security that permeates the organization. All individuals who have access to data must understand their responsibility in protecting the company’s sensitive data and its customers.
 
-Data security is also about timing—providing data access to exactly the people and systems that need to access it and only for the duration necessary to perform their work. Data should be protected from unwanted visibility, both in flight and at rest, by using encryption, tokenization, data masking, obfuscation, and simple, robust access controls.
+- Data security is also about timing—providing data access to exactly the people and systems that need to access it and only for the duration necessary to perform their work. Data should be protected from unwanted visibility, both in flight and at rest, by using encryption, tokenization, data masking, obfuscation, and simple, robust access controls.
 
-Knowledge of user and identity access management (IAM) roles, policies, groups, network security, password policies, and encryption are good places to start.
-
+- Knowledge of user and identity access management (IAM) roles, policies, groups, network security, password policies, and encryption are good places to start.
+```
+---
 
 ## Data Management
 
 Disciplines of Data Management
 ```
-Data governance, master data management, data quality
-management, metadata management
+Data management has quite a few facets, including the following:
+- Data governance, including data quality, integrity, security, discoverability and accountability
+- Data modeling and design
+- Metadata management
+- Data lineage
+- Storage and operations
+- Data integration and interoperability
+- Data lifecycle management
+- Data systems for advanced analytics and ML
+- Ethics and privacy
 ```
 ---
 
@@ -189,77 +192,42 @@ Data management is the development, execution, and supervision of plans, policie
 ```
 ---
 
-Data management has quite a few facets, including the following:
-• Data governance, including discoverability and accountability
-• Data modeling and design
-• Data lineage
-• Storage and operations
-• Data integration and interoperability
-• Data lifecycle management
-• Data systems for advanced analytics and ML
-• Ethics and privacy
-
 Data governance
-According to Data Governance: The Definitive Guide, “Data governance is, first and
-foremost, a data management function to ensure the quality, integrity, security, and
-usability of the data collected by an organization.”1
-
-discoverability - data catalog
-security
-accountability -Data accountability means assigning an individual to govern a portion of data.
-data quality
-metadata
-privacy
-
+```
+According to Data Governance: The Definitive Guide, “Data governance is, first and foremost, a data management function to ensure the quality, integrity, security, and usability of the data collected by an organization.”1
+```
+---
 
 Master Data Management
-Master data is data about business entities such as employees, customers, products,
-and locations. As organizations grow larger and more complex through organic
-growth and acquisitions, and collaborate with other businesses, maintaining a consistent
-picture of entities and identities becomes more and more challenging.
-Master data management (MDM) is the practice of building consistent entity definitions
-known as golden records.
 
-MDM reaches across the full data cycle into operational databases. It may fall directly
-under the purview of data engineering but is often the assigned responsibility of a
-dedicated team that works across the organization.
+```
+Master data is data about business entities such as employees, customers, products, and locations. As organizations grow larger and more complex through organic growth and acquisitions, and collaborate with other businesses, maintaining a consistent picture of entities and identities becomes more and more challenging. Master data management (MDM) is the practice of building consistent entity definitions known as golden records.
 
-
-Cloud data warehouses support the ingestion of enormous quantities of
-denormalized and semistructured data, while still supporting common data modeling
-patterns, such as Kimball, Inmon, and Data Vault.
-
-With the wide variety of data that engineers must cope with, there is a temptation
-to throw up our hands and give up on data modeling. This is a terrible idea with
-harrowing consequences, made evident when people murmur of the write once, read
-never (WORN) access pattern or refer to a data swamp. Data engineers need to
-understand modeling best practices as well as develop the flexibility to apply the
-appropriate level and type of modeling to the data source and use case.
+MDM reaches across the full data cycle into operational databases. It may fall directly under the purview of data engineering but is often the assigned responsibility of a dedicated team that works across the organization.
+```
+---
 
 Data lineage
-As data moves through its lifecycle, how do you know what system affected the data
-or what the data is composed of as it gets passed around and transformed? Data
-lineage describes the recording of an audit trail of data through its lifecycle, tracking
-both the systems that process the data and the upstream data it depends on.
-Data lineage helps with error tracking, accountability, and debugging of data and
-the systems that process it
+```
+As data moves through its lifecycle, how do you know what system affected the data or what the data is composed of as it gets passed around and transformed? Data lineage describes the recording of an audit trail of data through its lifecycle, tracking both the systems that process the data and the upstream data it depends on. Data lineage helps with error tracking, accountability, and debugging of data and the systems that process it.
+```
+---
 
-Data integration and interoperability is the process of integrating data across tools and
-processes. As we move away from a single-stack approach to analytics and toward a
-heterogeneous cloud environment in which various tools process data on demand,
-integration and interoperability occupy an ever-widening swath of the data engineer’s
-job.
-Increasingly, integration happens through general-purpose APIs rather than custom
-database connections. For example, a data pipeline might pull data from the Salesforce
-API, store it to Amazon S3, call the Snowflake API to load it into a table, call the
-API again to run a query, and then export the results to S3 where Spark can consume
-them.
 
-Second, privacy and data retention laws such as the GDPR and the CCPA require
+Data integration and interoperability
+
+```
+The process of integrating data across tools and processes. As we move away from a single-stack approach to analytics and toward a heterogeneous cloud environment in which various tools process data on demand, integration and interoperability occupy an ever-widening swath of the data engineer’s job. Increasingly, integration happens through general-purpose APIs rather than custom database connections. For example, a data pipeline might pull data from the Salesforce API, store it to Amazon S3, call the Snowflake API to load it into a table, call the API again to run a query, and then export the results to S3 where Spark can consume them.
+```
+---
+
+Data privacy
+
+```
+Data privacy and data retention laws such as the GDPR and the CCPA require
 data engineers to actively manage data destruction to respect users’ “right to be
 forgotten.” Data engineers must know what consumer data they retain and must have
 procedures to destroy data in response to requests and compliance requirements.
-
 
 How do ethics and privacy impact the data engineering lifecycle? Data engineers
 need to ensure that datasets mask personally identifiable information (PII) and other
@@ -267,14 +235,15 @@ sensitive information; bias can be identified and tracked in datasets as they ar
 Regulatory requirements and compliance penalties are only growing. Ensure
 that your data assets are compliant with a growing number of data regulations, such
 as GDPR and CCPA. Please take this seriously. We offer tips throughout the book to
-ensure that you’re baking ethics and privacy into the data engineering lifecycle
-
+ensure that you’re baking ethics and privacy into the data engineering lifecycle.
+```
+---
 
 ## DataOps
 
-
-Whereas DevOps aims to improve the release and quality
-of software products, DataOps does the same thing for data products.
+DataOps
+```
+Whereas DevOps aims to improve the release and quality of software products, DataOps does the same thing for data products.
 
 DataOps is a collection of technical practices, workflows, cultural norms, and architectural patterns that enable:
 • Rapid innovation and experimentation delivering new insights to customers with increasing velocity
@@ -282,11 +251,16 @@ DataOps is a collection of technical practices, workflows, cultural norms, and a
 • Collaboration across complex arrays of people, technology, and environments
 • Clear measurement, monitoring, and transparency of results
 
-
-
-
 DataOps has three core technical elements: automation, monitoring and observability, and incident response.
+```
+---
 
+DataOps elements
+```
+DataOps has three core technical elements: automation, monitoring and observability, and incident response.
+```
+
+```
 Automation:
 - change management (environment, code, and data version control)
 - continuous integration/continuous deployment (CI/CD)
@@ -294,24 +268,13 @@ Automation:
 - monitor and maintain the reliability of technology and systems (data pipelines, orchestration, etc.), with the added dimension of checking for data quality, data/model drift, metadata integrity, and more
 
 Observability and monitoring
-Observability,
-monitoring, logging, alerting, and tracing are all critical to getting ahead of any
-problems along the data engineering lifecycle.
+- monitoring,
+- logging,
+- alerting,
+- tracing are all critical to getting ahead of any problems along the data engineering lifecycle.
 
-Petrella’s DODD method
-
-The purpose of DODD is to give everyone involved in the data chain visibility into
-the data and data applications so that everyone involved in the data value chain has
-the ability to identify changes to the data or data applications at every step—from
-ingestion to transformation to analysis—to help troubleshoot or prevent data issues.
-DODD focuses on making data observability a first-class consideration in the data
-engineering lifecycle.
-
-Incident response
-
-Incident response is about using the automation and observability capabilities
-mentioned previously to rapidly identify root causes of an incident and resolve it as
-reliably and quickly as possible.
+Incident response is about using the automation and observability capabilities mentioned previously to rapidly identify root causes of an incident and resolve it as reliably and quickly as possible.
+```
 
 
 ## Data Architecture
