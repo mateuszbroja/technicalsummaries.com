@@ -10,6 +10,7 @@ title: "02: The Data Engineering Lifecycle"
 
 {{< columns >}}
 **Lifecycle:**
+
 - Generation
 - Storage
 - Ingestion
@@ -19,6 +20,7 @@ title: "02: The Data Engineering Lifecycle"
 <--->
 
 **Undercurrents of the lifecycle:**
+
 - Security
 - Data management
 - DataOps
