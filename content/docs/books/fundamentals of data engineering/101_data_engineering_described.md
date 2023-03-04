@@ -5,13 +5,14 @@ title: "01: Data Engineering Described"
 
 # Data Engineering Described
 
-Data Engineer's goals:
+## Data Engineer's goals
+---
+
 - **`produce optimum ROI`** and reduce costs (financial and opportunity)
 - reduce risk (security, data quality)
 - maximize data value and utility
 - must constantly optimize along the axes of cost, agility, **`scalability`**, simplicity, reuse, and **`interoperability`**.
 
-<br>
 
 ## History of data engineering
 ---
@@ -29,22 +30,22 @@ Data Engineer's goals:
 - **`Apache Spark`** rise because too many tools on the market drove to inventing one unified tool, which was Apache Spark. It got very popular in 2015 and later.
 - Simplification. despite the power and sophistication of open source big data tools, managing them was a lot of work and required constant attention. data engineers historically tended to the low-level details of monolithic frameworks such as Hadoop, Spark, or Informatica, the trend is moving toward **`decentralized, modularized, managed, and highly abstracted tools`**.
 
-<br>
-
 ## Data team
 ---
 
-Upstream stakeholders:
+{{< columns >}}
+**Upstream stakeholders**
 - Data architects
 - Software engineers
 - **`DevOps engineers`**
 
-Downstream stakeholders:
+<--->
+
+**Downstream stakeholders**
 - Data scientists
 - Data analysts
 - Machine learning engineers and AI researchers
-
-<br>
+{{< /columns >}}
 
 ## Data maturity
 ---

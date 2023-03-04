@@ -1,6 +1,7 @@
 ---
 weight: 2
 title: "About me"
+bookToc: false
 ---
 
 # About me

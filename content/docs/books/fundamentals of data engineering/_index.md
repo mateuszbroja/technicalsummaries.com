@@ -1,6 +1,7 @@
 ---
 bookCollapseSection: true
 weight: 2
+bookToc: false
 ---
 
 # Fundamentals of Data Engineering

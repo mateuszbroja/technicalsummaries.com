@@ -5,27 +5,32 @@ title: "02: The Data Engineering Lifecycle"
 
 # The Data Engineering Lifecycle
 
-Lifecycle:
+## Components of the lifecycle
+---
+
+{{< columns >}}
+**Lifecycle**
 - Generation
 - Storage
 - Ingestion
 - Transformation
 - Serving data
 
-Undercurrents of the data engineering lifecycle:
+<--->
+
+**Undercurrents of the lifecycle**
 - Security
 - Data management
 - DataOps
 - Data architecture
 - Orchestration
 - Software engineering
-
-<br>
+{{< /columns >}}
 
 ## Generation
 ---
 
-Key engineering considerations for generation:
+### Key engineering considerations for generation
 - Is it application/IoT/database?
 - At what rate is data generated.
 - Quality of the data.
@@ -33,13 +38,10 @@ Key engineering considerations for generation:
 - How frequently should data be pulled from the source system?
 - Will reading from a data source impact its performance?
 
-
-<br>
-
 ## Storage
 ---
 
-Key engineering considerations for storage:
+### Key engineering considerations for storage
 - Data volumes, frequency of ingestion, files format.
 - Scaling (total available storage, read operation rate, write volume, etc.).
 - Capturing metadata (schema evolution, data flows, data lineage)
@@ -48,13 +50,10 @@ Key engineering considerations for storage:
 - How are you tracking master data, golden records data quality, and data lineage for data governance?
 - How are you handling regulatory compliance and data sovereignty?
 
-Temperatures of data:
+### Temperatures of data
 - hot data
 - lukewarm data
 - cold data
-
-
-<br>
 
 ## Ingestion
 ---
@@ -77,7 +76,6 @@ Push model: a source system writes data out to a target, whether a database, obj
 
 Pull model: data is retrieved from the source system. Example is CDC with logs.
 
-<br>
 
 ## Transformation
 ---
@@ -89,14 +87,12 @@ Examples of transformations:
 - featurizeing data for ML processes,
 - enriching the data.
 
-<br>
 
 ## Other terms
 ---
 
 Reverse ETL: takes processed data from the output side of the data engineering lifecycle and feeds it back into source systems. It allows us to take analytics, scored models, etc., and feed these back into production systems or SaaS platforms. For some engineers view as a anti-pattern.
 
-<br>
 
 ## Security
 ---
@@ -112,7 +108,6 @@ Security good practices:
 
 - Knowledge of user and identity access management (IAM) roles, policies, groups, network security, password policies, and encryption are good places to start.
 
-<br>
 
 ## Data Management
 ---
