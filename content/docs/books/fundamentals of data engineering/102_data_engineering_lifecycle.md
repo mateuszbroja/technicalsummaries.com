@@ -157,9 +157,8 @@ Data engineers need to ensure:
 - that your data assets are compliant with a growing number of data regulations, such as GDPR and CCPA.
 
 
----
-
 ## DataOps
+---
 
 Whereas `DevOps` aims to improve the release and quality of software products, DataOps does the same thing for data products.
 
@@ -192,8 +191,8 @@ DataOps is a collection of technical practices, workflows, cultural norms, and a
 
 Incident response is about using the automation and observability capabilities mentioned previously to rapidly identify root causes of an incident and resolve it as reliably and quickly as possible.
 
-
 ## Other concepts
+---
 
 ### Orchestration
 
