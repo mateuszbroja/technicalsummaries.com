@@ -1,8 +1,19 @@
 ---
 bookCollapseSection: true
-weight: 20
+weight: 2
 ---
 
-# sdfsdf
+# Fundamentals of Data Engineering
 
-sdfsdfsdf
+## Book details
+
+---
+
+**Title**: Fundamentals of Data Engineering - Plan and Build Robust Data Systems
+
+**Author**: Joe Reis & Matt Housley
+
+**Edition**: First
+
+**Date**: July 2022
+
