@@ -33,24 +33,24 @@ title: "02: The Data Engineering Lifecycle"
 ---
 
 **Considerations for generation:**
-- Is it application/IoT/database?
-- At what rate is data generated.
-- Quality of the data.
-- Schema of ingested data.
-- How frequently should data be pulled from the source system?
-- Will reading from a data source impact its performance?
+- Type of data source (application/IoT/database)
+- Data generation rate
+- Data quality
+- Schema of the data
+- Data ingestion frequency
+- Impact on source system performance when reading data
 
 ## Storage
 ---
 
 **Considerations for storage:**
-- Data volumes, frequency of ingestion, files format.
-- Scaling (total available storage, read operation rate, write volume, etc.).
-- Capturing metadata (schema evolution, data flows, data lineage)
-- Is this a pure storage solution (object storage), or does it support complex query patterns (i.e., a cloud data warehouse)?
-- Is the storage system schema-agnostic (object storage)? Flexible schema (Cassandra)? Enforced schema (a cloud data warehouse)?
-- How are you tracking master data, golden records data quality, and data lineage for data governance?
-- How are you handling regulatory compliance and data sovereignty?
+- Data characteristics such as volume, frequency of ingestion, and file format
+- Scaling capabilities including available storage, read/write rates, and throughput
+- Metadata capture for schema evolution, data lineage, and data flows
+- Storage solution type: object storage or cloud data warehouse
+- Schema management: schema-agnostic object storage, flexible schema with Cassandra, or enforced schema with a cloud data warehouse
+- Master data management, golden records, data quality, and data lineage for data governance
+- Regulatory compliance and data sovereignty considerations
 
 **Temperatures of data**
 - hot data
@@ -98,15 +98,10 @@ Ingestion part is usually located biggest bottlenecks of the lifecycle. The sour
 
 ### Security good practices
 
-
-- `The principle of least privilege` means giving a user or system access to only the essential data and resources to perform an intended function
-
-- The first line of defense for data security is to create a culture of security that permeates the organization. All individuals who have access to data must understand their responsibility in protecting the company’s sensitive data and its customers.
-
-- Data security is also about timing—providing data access to exactly the people and systems that need to access it and only for the duration necessary to perform their work. Data should be protected from unwanted visibility, both in flight and at rest, by using `encryption`, `tokenization`, `data masking`, obfuscation, and simple, robust access controls.
-
-- Knowledge of user and `identity access management (IAM) `roles, policies, groups, network security, password policies, and encryption are good places to start.
-
+- `Principle of least privilege`: give access only to the essential data and resources needed to perform an intended function.
+- Create a culture of security.
+- Protect data from unwanted visibility using `encryption`, `tokenization`, `data masking`, obfuscation, and access controls.
+- Implement user and identity access management (IAM) roles, policies, groups, network security, password policies, and encryption.
 
 ## Data Management
 ---
@@ -146,9 +141,7 @@ Data lineage describes the recording of an audit trail of data through its lifec
 
 ### Data integration and interoperability
 
-The process of integrating data across tools and processes. As we move away from a single-stack approach to analytics and toward a heterogeneous cloud environment in which various tools process data on demand, integration and interoperability occupy an ever-widening swath of the data engineer’s job.
-
-For example, a data pipeline might pull data from the Salesforce API, store it to Amazon S3, call the Snowflake API to load it into a table, call the API again to run a query, and then export the results to S3 where Spark can consume them.
+Data integration is becoming increasingly important as data engineers move away from single-stack analytics and towards a heterogeneous cloud environment. The process involves integrating data across various tools and processes.
 
 ### Data privacy
 
@@ -162,13 +155,7 @@ Data engineers need to ensure:
 ## DataOps
 ---
 
-Whereas `DevOps` aims to improve the release and quality of software products, DataOps does the same thing for data products.
-
-DataOps is a collection of technical practices, workflows, cultural norms, and architectural patterns that enable:
-• rapid innovation and experimentation delivering new insights to customers with increasing `velocity`,
-• extremely high data quality and very low error rates,
-• collaboration across complex arrays of people, technology, and environments,
-• clear measurement, monitoring, and transparency of results.
+DataOps is like DevOps, but for data products. It's a set of practices that enable rapid innovation, high data quality, collaboration, and clear measurement and monitoring.
 
 **DataOps has three core technical elements:**
 - automation,
@@ -198,14 +185,10 @@ Incident response is about using the automation and observability capabilities m
 
 ### Orchestration
 
-- process of coordinating many jobs to run as quickly and efficiently as possible on a scheduled cadence.
-- orchestration system stays online with high availability.
-- orchestration systems also build job history capabilities, visualization, and alerting.
-- advanced orchestration engines can backfill new DAGs or individual tasks as they are added to a DAG.
-- orchestration is strictly a batch concept.
+Orchestration is the process of coordinating multiple jobs efficiently on a schedule. It ensures high availability, job history, visualization, and alerting. Advanced engines can backfill new tasks and DAGs, but orchestration is strictly a batch concept.
 
 ### Infrastructure as code (IaC)
 
-`IaC` applies software engineering practices to the configuration and management of infrastructure. When data engineers have to manage their infrastructure in a cloud environment, they increasingly do this through IaC frameworks rather than manually spinning up instances and installing software.
+`IaC (Infrastructure as Code)` applies software engineering practices to managing infrastructure configuration. Data engineers use IaC frameworks to manage their infrastructure in a cloud environment, instead of manually setting up instances and installing software.
 
 
