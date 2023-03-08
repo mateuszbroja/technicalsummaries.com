@@ -12,13 +12,13 @@ bookHidden: false
 
 **Security:**
 
-- Keep data within your VPC using secure endpoints
-- Use a VPN or private connection for data transfer between cloud and on-premises networks
-- Encrypt data transmission over public internet
+- Keep data within your VPC using secure endpoints.
+- Use a VPN or private connection for data transfer between cloud and on-premises networks.
+- Encrypt data transmission over public internet.
 
 **Data Management:**
 
-- Handle schema changes, privacy-sensitive data, and monitor uptime, latency, and data volumes
+- Handle schema changes, privacy-sensitive data, and monitor uptime, latency, and data volumes.
 - Conduct data-quality tests, capture data changes through logs, and perform checks and exception handling.
 
 ## Factors when designing your ingestion architecture:
