@@ -82,18 +82,30 @@ bookHidden: false
 ---
 ## Ways to Ingest Data
 
-
 - `Direct Database Connection`: Data can be pulled from databases for ingestion using `ODBC` or `JDBC`, but they struggle with nested data and sending data as rows. Some databases support native file export, while cloud data warehouses provide direct REST APIs for ingestion.
+
 - `Change data capture (CDC)` ingests changes from a source database system. Batch-oriented CDC queries the table for updated rows since a specified time. Continuous CDC reads the log and sends events to a target in real-time.
+  
 - APIs
+
 - Message Queues and Event-Streaming Platforms
+
 - Managed Data Connectors
+
 - Moving Data with Object Storage
+
 - Electronic data interchange (EDI): emails, hard drives.
+
 - Database and File Export: CSV is still commonly used but highly error-prone, while more robust and expressive export formats like Parquet, Avro, Arrow, ORC, or JSON natively encode schema information and handle arbitrary string data.
+
 - Shell
+
 - `SSH` can be used for file transfer with SCP and for secure connections to databases through SSH tunnels. To connect to a database, a remote machine first opens an SSH tunnel connection to a bastion host, which connects to the database. This helps keep databases isolated and secure. `SFTP` and `SCP` are secure file-exchange protocols that run over an SSH connection. They are commonly used for transferring files between systems securely. 
+
 - Webhooks (reverse API) - webhook-based data ingestion can be difficult to maintain and inefficient.
+
 - Web Interface
+
 - Web Scraping
+
 - Data Sharing
