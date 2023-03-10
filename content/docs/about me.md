@@ -15,3 +15,5 @@ You can also find me on [GitHub](https://github.com/mateuszbroja).
 And for more information about me and my work, please visit my personal website: [matbroya.com](https://matbroya.com/).
 
 Thank you for visiting my website and I hope you find my book summaries helpful!
+
+![matbroya](C:\sites\technicalsummaries.com\resources\_gen\assets\img\matbroya_small.png)
