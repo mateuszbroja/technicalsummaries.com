@@ -5,9 +5,9 @@ bookToc: false
 ---
 
 # Fundamentals of Data Engineering
+---
 
 ## Book details
-
 ---
 
 **Title**: Fundamentals of Data Engineering - Plan and Build Robust Data Systems
@@ -18,3 +18,4 @@ bookToc: false
 
 **Date**: July 2022
 
+**Link for buying the book**: [O'REILLY](https://www.oreilly.com/library/view/fundamentals-of-data/9781098108298/)

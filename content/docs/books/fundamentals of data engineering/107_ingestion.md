@@ -46,8 +46,8 @@ bookHidden: false
 
 **Push versus pull versus poll patterns** - Push strategy sends data from the source to the target, while pull strategy has the target directly read from the source. Polling periodically checks for changes and pulls data when changes are detected.
 
----
 ## Batch Ingestion Considerations
+---
 
 **Time-based or Size-based** - Time-interval batch ingestion processes data once a day for daily reporting, while size-based batch ingestion cuts data into blocks for future processing in a data lake.
 

@@ -5,7 +5,7 @@ bookHidden: false
 ---
 
 # Queries, Modeling, and Transformation
-
+---
 
 Data governance tips:
 - Keep credentials secure and avoid storing them in code.
@@ -79,6 +79,7 @@ Data modeling includes three stages:
 Additional normal forms exist up to 6NF, but are less common. `Denormalization` is common in many OLAP systems with semi-structured data.
 
 ## Techniques for Modeling Batch Analytical Data
+---
 
 ### Inmon
 Data warehouse created in 1989 to separate source system from analytical system. 4 critical parts: `subject-oriented`, `integrated`, `nonvolatile`, and `time-variant`. Emphasis on ETL to ingest and integrate data from source systems into highly normalized data warehouse. Serves as `single source of truth`. Data modeling in data marts typically uses star schema.

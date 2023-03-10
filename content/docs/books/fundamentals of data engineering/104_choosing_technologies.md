@@ -4,12 +4,15 @@ title: "04: Choosing Technologies Across the Data Engineering Lifecycle"
 ---
 
 # Choosing Technologies Across the Data Engineering Lifecycle
-## Architecture versus tools
-
-It's important to distinguish between architecture and tools. Architecture is a strategic consideration that answers questions like what, why, and when, while tools are tactical and answer how. Architecture is the foundation of a system, while tools are used to make the architecture a reality. **Architecture first, technology second.**
-
 ---
+
+## Architecture versus tools
+---
+
+Architecture is strategic, answering what, why, and when, while tools are tactical, answering how. Architecture is the foundation of a system, while tools make it a reality. **Architecture first, technology second.**
+
 ## Considerations for choosing technologies
+---
 
 ### Team size and capabilities
 Use as many managed and SaaS tools as possible, and dedicate your limited bandwidth to solving the complex problems that directly add value to the business. Take an inventory of your team’s skills.
@@ -48,11 +51,11 @@ Important is choosing a deployment platform, consider on-prem, cloud, hybrid clo
 
 **Cloud** - instead of purchasing hardware, you simply rent hardware and managed services from a cloud provider (such as AWS, Azure, or Google Cloud). IaaS, PaaS, SaaS, serverless products. Remember that vendors want to lock you into their offerings.
 
-{{< hint info >}} *Strategy Lift and shift* is moving on-premises servers one by one to VMs in the cloud. {{< /hint >}}
+{{< hint info >}} **Strategy Lift and shift** is moving on-premises servers one by one to VMs in the cloud. {{< /hint >}}
 
 **Hybrid Cloud** - cloud model, which assumes that an organization will indefinitely maintain some workloads outside the cloud. Usually, companies with this model keep operational functions on premise and analytics on a cloud.
 
-**Multicloud** - refers to deploying workloads to multiple public clouds. Users can take advantage of the best services across several clouds. Drawbacks are: networking between clouds, complexity. There are service, which operates on multicloud, like Snowflake and are called *cloud of clouds*.
+**Multicloud** - refers to using multiple public clouds to deploy workloads, offering the best services across several clouds. However, it can introduce networking complexity. There are also services, such as Snowflake, that operate on multicloud and are known as `cloud of clouds`.
 
 **Decentralized** - whereas today’s applications mainly run on premises and in the cloud, the rise of blockchain, Web 3.0, and edge computing may invert this paradigm.
 
@@ -67,7 +70,7 @@ When deciding whether to build or buy a solution, consider factors like control,
 
 `Two-pizza rule`: no team should be so large that two pizzas can’t feed the whole group
 
-In a modular microservice environment, components are swappable and can be written in different programming languages. This approach promotes interoperability and allows developers to focus on the technical specifications. However, the distributed monolith pattern is a distributed architecture that still suffers from many of the limitations of monolithic architecture. It involves running a distributed system with different services to perform different tasks, but with a common set of dependencies or a common codebase. A traditional Hadoop cluster is one example of this pattern, which hosts multiple frameworks and has many internal dependencies, while also running core Hadoop components.
+In modular microservice architecture, components can be swapped and written in different languages for interoperability, while distributed monolith pattern suffers from limitations of monolithic architecture by running a distributed system with common dependencies. Hadoop cluster is an example of this pattern, hosting multiple frameworks and internal dependencies while running core Hadoop components.
 
 | Monoliths             | Modular                  |
 |-----------------------|--------------------------|
@@ -80,7 +83,7 @@ In a modular microservice environment, components are swappable and can be writt
 
 `Serverless technology`, starting with AWS Lambda in 2014, allows for the execution of small code portions on an as-needed basis without having to manage a server. It's essential to monitor and model serverless usage to determine costs and performance as event rates increase.
 
-`Containers` are lightweight virtual machines that provide benefits of virtualization without the overhead of carrying an entire operating system kernel. They play a role in both serverless and microservices and are one of the most powerful trending operational technologies. Services like AWS Fargate and Google App Engine run containers without managing a compute cluster required for Kubernetes, and fully isolate containers to prevent security issues associated with multitenancy.
+`Containers` are lightweight virtual machines that offer virtualization benefits without carrying an entire OS kernel. They're used in serverless and microservices and are a powerful operational technology. Services like AWS Fargate and Google App Engine run containers without managing a compute cluster and isolate containers to prevent security issues associated with multitenancy.
 
 Considerations:
 - expect servers to fail,
@@ -93,19 +96,19 @@ Considerations:
 {{< columns >}}
 **TCO**
 
-`Total cost of ownership (TCO)` is the total cost of an initiative, including direct and indirect costs. Direct costs are attributed to the initiative, while indirect costs are independent of it. Expenses are categorized into capital expenses (up-front investment) and operational expenses (spread out over time). Opex provides greater flexibility for engineering teams to choose their software and hardware, often inexpensively through cloud-based services.
+`Total cost of ownership (TCO)` refers to the total cost of an initiative, including direct and indirect costs, categorized into capital expenses and operational expenses. Opex provides greater flexibility for engineering teams to choose their software and hardware through cloud-based services.
 
 <--->
 
 **TOCO**
 
-`Total Opportunity Cost of Ownership (TOCO)` is the cost of lost opportunities due to the choice of technology, architecture, or process. It's important to evaluate it to minimize the risk of getting stuck with inflexible technologies that limit future growth or become obsolete. Such technologies can be like bear traps, easy to get into but difficult to escape from.
+`Total Opportunity Cost of Ownership (TOCO)` is the cost of missed opportunities that can result from choosing a particular technology, architecture, or process. Evaluating TOCO is essential to minimize the risk of being trapped with inflexible technologies that can limit future growth or become obsolete.
 
 <--->
 
 **FinOps**
 
-`FinOps` is not just about saving money, but also about making money. Cloud spend can lead to revenue growth, customer base expansion, faster product release, and help with data center shutdown. In data engineering, the ability to iterate quickly and scale dynamically in the cloud is crucial for creating business value.
+`FinOps` is a practice of managing cloud resources to optimize spending and maximize business value. It's not only about reducing cloud costs, but also about increasing revenue, improving product release times, and facilitating data center consolidation. The ability to rapidly iterate and scale in the cloud is critical for data engineering to create business value.
 
 {{< /columns >}}
 
@@ -125,8 +128,4 @@ Factors to consider with a community-managed OSS project:
 
 **Commercial OSS**
 
-Commercial OSS is the core of the OSS offered for free, with the option to pay for enhancements or fully managed services. Factors to consider include value, delivery model, support, releases, bug fixes, sales cycle, pricing, and company finances.
-
-Independent offerings should be evaluated for interoperability, mindshare, market share, documentation and support, pricing, and longevity.
-
-Cloud platform proprietary service offerings include proprietary services for storage, databases, and more.
+Commercial OSS offers a core OSS for free, with the option to pay for enhancements or managed services. Consider value, support, pricing, and more. Independent offerings should be evaluated for interoperability, mindshare, market share, documentation, pricing, and longevity. Cloud platforms offer proprietary services for storage, databases, etc.
