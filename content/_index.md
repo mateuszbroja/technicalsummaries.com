@@ -1,5 +1,5 @@
 ---
-title: technical summaries
+title: 'technical summaries'
 type: docs
 bookToc: false
 ---
