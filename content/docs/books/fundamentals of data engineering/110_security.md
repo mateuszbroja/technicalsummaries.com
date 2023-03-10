@@ -1,7 +1,7 @@
 ---
 weight: 10
 title: "10: Security and Privacy"
-bookHidden: true
+bookHidden: false
 ---
 
 # Security and Privacy
@@ -10,69 +10,51 @@ bookHidden: true
 Security is a key ingredient for privacy.
 
 ## People
+---
 
-People are often the weakest link in security and privacy, so it is important to be aware of potential risks and take measures to protect sensitive information.
-
-The Power of Negative Thinking - Data engineers should think about the attack and leak scenarios.
-
-Always Be Paranoid
+- **People** are often the weakest link in security and privacy, so it is important to be aware of potential risks and take measures to protect sensitive information.
+- **The Power of Negative Thinking** - Data engineers should think about the attack and leak scenarios.
+- **Always Be Paranoid**
+- Use good practices - `single-sign-on (SSO)`, multifactor authentication, never commit secrets to version control.
 
 ## Processes
-Security Theater Versus Security Habit - Clients are mainly focused on ensuring compliance with internal rules, laws, but they often overlook potential security risks. It's important to remember that security doesn't have to be complicated.
+---
 
-The principle of least privilege is to provide only the necessary privileges and data to individuals or systems to accomplish their tasks and nothing more. It is important to remove these privileges and roles when they are no longer required, including service accounts.
+**Security Theater Versus Security Habit** - Clients are mainly focused on ensuring compliance with internal rules, laws, but they often overlook potential security risks. It's important to remember that security doesn't have to be complicated.
 
-Shared Responsibility in the Cloud - Cloud security breaches are more often caused by end users rather than by the cloud itself.
+**The principle of least privilege** is to provide only the necessary privileges and data to individuals or systems to accomplish their tasks and nothing more. It is important to remove these privileges and roles when they are no longer required, including service accounts.
 
-Always Back Up Your Data - Data backup is typically considered a part of both security and disaster recovery practices.
+**Shared Responsibility in the Cloud** - Cloud security breaches are more often caused by end users rather than by the cloud itself.
 
-
-## An Example Security Policy
-
-### Protect Your Credentials
-Use single-sign-on (SSO) whenever possible
-Enable multifactor authentication with SSO
-Don't share passwords or credentials, and prioritize SSO
-Beware of phishing and scam calls, never give out passwords
-Disable or delete old credentials
-Handle secrets as configuration and never commit them to version control
-Use a secrets manager where possible
-Always apply the principle of least privilege to all credentials and privileges in the cloud and on-premises.
-
-### Protect Your Devices
-Use device management and multifactor authentication for all devices.
-Sign in to devices with company email credentials and follow all company policies.
-Treat devices as an extension of yourself and don't let them out of your sight.
-Be cautious when screen sharing and only share necessary information.
-Use "do not disturb" mode during video calls to prevent interruptions.
-
-### Software Update Policy
-Restart web browser for updates
-Run minor OS updates on devices
-Follow company guidance for critical major OS updates
-Avoid using beta version of an OS
-Wait for a week or two before installing new major OS versions
-
+**Always Back Up Your Data** - `Data backup` is typically considered a part of both security and disaster recovery practices.
 
 
 ## Technology
-Patch and Update Systems - do updates regulary
+---
 
-Encryption - essential for any organization that values security and privacy. It provides protection against basic attacks like network traffic interception.
+- **Patch and Update Systems** - do updates regulary
 
-Encryption at rest
-Data should be encrypted when it is stored on a storage device, which is known as encryption at rest. Full-disk encryption should be enabled on company laptops to ensure that data is protected in case the device is stolen.
+- **Encryption** - essential for any organization that values security and privacy. It provides protection against basic attacks like network traffic interception.
 
-Encryption over the wire
-Data should be encrypted at rest and over the wire, with keys handled securely. HTTPS is now the default for current protocols, but bucket permissions must also be secured. Older protocols like FTP are not secure on public networks and should be avoided.
+{{< columns >}}
+**Encryption at rest**
+Data should be encrypted when it is stored on a storage device, which is known as `encryption at rest`. Full-disk encryption should be enabled on company laptops to ensure that data is protected in case the device is stolen.
+<--->
+**Encryption over the wire**
+Data should be encrypted at rest and over the wire, with keys handled securely. `HTTPS` is now the default for current protocols, but bucket permissions must also be secured. Older protocols like `FTP` are not secure on public networks and should be avoided.
+{{< /columns >}}
 
 
 ## Logging, Monitoring, and Alerting
-- Access
-- Resources: disk, CPU, memory, and I/O.
-- Billing: especially with SaaS and cloud-managed services.
-- Excess permissions: monitor for permissions that are not utilized.
+---
+
+- **Access**
+- **Resources**: disk, CPU, memory, and I/O.
+- **Billing**: especially with SaaS and cloud-managed services.
+- **Excess permissions**: monitor for permissions that are not utilized.
  
 
 ## Network Access
-Leave network security to security experts at your company. Understand open IPs and ports, allow incoming IPs of systems and users accessing them, and avoid broadly opening connections. Use encrypted connections when accessing the cloud or a SaaS tool, and don't use unencrypted websites from public places.
+---
+
+Leave network security to security experts at your company. Understand open `IPs` and `ports`, allow incoming IPs of systems and users accessing them, and avoid broadly opening connections. Use encrypted connections when accessing the cloud or a SaaS tool, and don't use unencrypted websites from public places.

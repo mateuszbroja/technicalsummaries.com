@@ -1,7 +1,7 @@
 ---
 weight: 11
 title: "11: The Future of Data Engineering"
-bookHidden: true
+bookHidden: false
 ---
 
 # The Future of Data Engineering
@@ -16,7 +16,7 @@ The notion that simpler tools and practices will lead to the demise of data engi
 ## The Decline of Complexity and the Rise
 ---
 
-SaaS-managed services have made it possible for all companies to do data engineering by removing the complexity of understanding big data systems that previously required a large team and significant resources to deploy in the 2000s. Off-the-shelf` data connectors` like Fivetran and Airbyte save time and resources for data engineers,
+SaaS-managed services have made it possible for all companies to do data engineering by removing the complexity of understanding big data systems that previously required a large team and significant resources to deploy in the 2000s. Off-the-shelf` data connectors` like `Fivetran` and `Airbyte` save time and resources for data engineers,
 
 
 ## The Cloud-Scale Data OS and Improved Interoperability
@@ -24,15 +24,15 @@ SaaS-managed services have made it possible for all companies to do data enginee
 
 The next evolution of cloud data operating systems will focus on higher levels of abstraction.
 
-- Object storage in the cloud and new file formats like Parquet and Avro will play a significant role in cloud data interchange.
+- Object storage in the cloud and new file formats like `Parquet` and `Avro` will play a significant role in cloud data interchange.
 - A metadata catalog will be crucial in driving automation and simplification.
-- Data orchestration platforms like Apache Airflow, Dagster, and Prefect will become significantly more data-aware.
+- Data orchestration platforms like `Apache Airflow`, `Dagster`, and `Prefect` will become significantly more data-aware.
 
 
 ## Enterprisey Data Engineering
 ---
 
-Simplification and best practices will make data engineering more *enterprisey*, but this only refers to the good aspects of data management and governance. The golden age of enterprisey data management tools is currently ongoing, with technology becoming more accessible and presenting opportunities for data engineers to focus on data management and DataOps.
+Simplification and best practices will make data engineering more *enterprisey*, but this only refers to the good aspects of data management and governance. **The golden age of *enterprisey* data management tools is currently ongoing**, with technology becoming more accessible and presenting opportunities for data engineers to focus on data management and DataOps.
 
 
 ## Titles and Responsibilities Will Morph
@@ -44,13 +44,13 @@ As simplicity moves up the stack, the boundaries between data engineering, softw
 ## The Live Data Stack
 ---
 
-The Live Data Stack, which fuses real-time analytics and ML into applications using streaming technologies, will be the successor to the Modern Data Stack. It will democratize real-time technologies, making them accessible to companies of all sizes as easy-to-use cloud-based offerings and opening up new possibilities for creating better user experiences and business value.
+`The Live Data Stack`, which fuses real-time analytics and ML into applications using streaming technologies, will be the successor to `the Modern Data Stack`. It will democratize real-time technologies, making them accessible to companies of all sizes as easy-to-use cloud-based offerings and opening up new possibilities for creating better user experiences and business value.
 
 
 ## Streaming Pipelines and Real-Time Analytical Databases
 ---
 
-Streaming pipelines and real-time analytical databases will facilitate the move from the MDS to the Live Data Stack. Streaming technologies will continue to see extreme growth, with a focus on the business utility of streaming data. Real-time analytical databases enable fast ingestion and subsecond queries on data. A back-to-the-future moment for data transformations will shift away from ELT to a stream, transform, and load (STL) approach.
+Streaming pipelines and real-time analytical databases will facilitate the move from the MDS to the Live Data Stack. Streaming technologies will continue to see extreme growth, with a focus on the business utility of streaming data. Real-time analytical databases enable fast ingestion and subsecond queries on data. A back-to-the-future moment for data transformations will shift away from `ELT` to a stream, transform, and load (`STL`) approach.
 
 
 ## The Fusion of Data with Applications

@@ -75,7 +75,7 @@ ACID not required for app backends, but they guarantee consistency. Relaxing the
 
 OLAP systems are designed to handle large analytics queries but are not efficient in handling lookups of individual records. Such systems typically involve scanning large data blocks of at least 100 MB in size for each query. Trying to perform thousands of individual lookups per second can overload the system unless combined with a caching layer specifically designed for this purpose.
 
----
+
 ## Important terms
 ---
 

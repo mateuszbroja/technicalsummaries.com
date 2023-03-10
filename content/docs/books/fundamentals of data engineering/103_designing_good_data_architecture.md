@@ -4,18 +4,17 @@ title: "03: Designing Good Data Architecture"
 ---
 
 # Designing Good Data Architecture
-## Data Architecture
-
-`Enterprise architecture` involves designing systems that support enterprise change, utilizing flexible and reversible decisions that are made by evaluating trade-offs carefully. It includes various subsets, such as business, technical, application, and data architecture.
-
-`Data architecture` is the design of systems to support the evolving data needs of an enterprise, achieved by flexible and reversible decisions reached through a careful evaluation of trade-offs.
-
-It comprises:
-- Operational architecture, which covers the functional requirements related to people, processes, and technology.
-- Technical architecture, which details the ingestion, storage, transformation, and serving of data throughout the data engineering lifecycle.
-
 ---
+
+## Data Architecture
+---
+
+`Enterprise architecture` involves designing flexible and reversible systems to support enterprise change through careful trade-off evaluations. It includes subsets like business, technical, application, and data architecture.
+
+`Data architecture` is the design of systems to support the evolving data needs of an enterprise. It includes `operational architecture` (related to people, processes, and technology) and `technical architecture` (details the ingestion, storage, transformation, and serving of data throughout the data engineering lifecycle).
+
 ## Principles of data engineering architecture
+---
 
 1. Choose common components wisely.
 2. Plan for failure.
@@ -29,80 +28,59 @@ It comprises:
 
 ### Principle 1: Choose common components wisely.
 
-Common components include:
-- object storage,
-- version-control systems,
-- observability,
-- monitoring and orchestration systems,
-- processing engines.
-
-Make commonly used components accessible with strong security features to facilitate sharing among teams and discourage duplication.
+Commonly used components in data engineering include object storage, version-control systems, observability, monitoring and orchestration systems, and processing engines. It is recommended to make these components accessible with strong security features to facilitate sharing among teams and discourage duplication.
 
 ### Principle 2: Plan for Failure.
 
-To build highly robust data systems, you must consider failures in your designs. Here are a few key terms for evaluating failure scenarios.
+To build robust data systems, consider failures in designs. Key terms to evaluate failure scenarios include:
 
-- `Availability` is the percentage of time an IT service or component is in an operable state.
-
-- `Reliability` is the system’s probability of meeting defined standards in performing its intended function during a specified interval.
-
-- `Recovery time objective` is the maximum acceptable time for a service or system outage. The recovery time objective (RTO) is generally set by determining the business impact of an outage. A one-day RTO could suffice for internal reporting, but a five-minute website outage can greatly harm an e-commerce business.
-
-- `Recovery point objective ` is the acceptable state after recovery. Specifies the maximum tolerable data loss in data systems, which frequently experience data loss during outages.
+- `Availability`: percentage of time an IT service or component is operable.
+- `Reliability`: probability of meeting defined standards in performing its intended function during a specified interval.
+- `Recovery time objective`: maximum acceptable time for a service or system outage.
+- `Recovery point objective`: acceptable state after recovery, specifying the maximum tolerable data loss in data systems.
 
 
 ### Principle 3: Architect for Scalability
 
-
 An ideal elastic system should automatically scale in response to load, even down to zero. However, improper scaling strategies can lead to complex systems and increased expenses.
-
 
 ### Principle 4: Architecture Is Leadership
 
 Mentoring the development team to handle complex issues is a crucial aspect of being the architect. By enhancing the team's skills, architects can gain more leverage than by making all decisions themselves and becoming a bottleneck.
 
-
 ### Principle 5: Always Be Architecting
 
-Modern architecture should not follow a command-and-control or `waterfall approach`, but rather be collaborative and agile. The data architect is responsible for maintaining a target architecture and sequencing plans that can adapt to changing business. Thus, the target architecture is a dynamic entity that evolves with time.
+Modern architecture is collaborative and agile, not command-and-control or `waterfall`. The data architect maintains a dynamic target architecture that adapts to changing business needs.
 
 ### Principle 6: Build Loosely Coupled Systems
 
-For software architecture, a loosely coupled system has the following properties:
+Loosely coupled system has the following properties:
 
-1. Systems are divided into small components.
-
-2. Components interact with other services through abstraction layers, like messaging buses or APIs, which protect internal details of the service.
-
-3. Changes in one component do not require changes in other parts due to stable APIs, allowing each piece to evolve independently.
-
-4. Each component is updated separately, eliminating a global release cycle for the whole system.
-
+1. Divided into small components.
+2. Interact through abstraction layers.
+3. Changes in one component do not affect others.
+4. Each component is updated separately.
 
 ### Principle 7: Make Reversible Decisions
 
 To keep up with the rapidly changing technological landscape and decoupled data architecture, prioritize selecting the best solutions available today. Remain open to upgrading or adopting better practices as the landscape evolves.
 
-
 ### Principle 8: Prioritize Security
 
-- Embrace zero-trust security models.
-
-- Understand the shared responsibility model in cloud computing, where providers secure their services, but users are responsible for designing their own security model for applications and data.
-
-- Encourage data engineers to also act as security engineers.
+- Use zero-trust security models.
+- Understand the shared responsibility model in cloud computing.
+- Encourage data engineers to act as security engineers too.
 
 ### Principle 9: Embrace FinOps
 
 `FinOps` is a developing financial management discipline and cultural practice in the cloud that promotes collaboration between engineering, finance, technology, and business teams to make data-driven spending decisions, resulting in maximum business value.
 
----
-
 ## Major Architecture Metrics
+---
 
 ### Elasticity
 
-`Elasticity` refers to a scalable system's ability to scale dynamically, automatically scaling up and down based on the workload. Scaling up is crucial when demand increases, while scaling down can save costs in a cloud environment. Modern systems can scale down to zero, which means they automatically shut down when idle.
+`Elasticity` is the ability of a system to scale dynamically based on workload. It includes scaling up and down, with the ability to scale down to zero.
 
 ### Availability
 
@@ -133,6 +111,7 @@ failure rate = number of failures/total time in service
 
 
 ## Architectural patterns
+---
 
 The `tightly coupled pattern` involves highly centralized dependencies and workflows, where each domain and service is dependent on one another.
 
@@ -171,26 +150,22 @@ The `monolith` architecture pattern involves having as much as possible under a 
 
 A `microservices architecture` consists of **separate, decentralized, and loosely coupled services**, with each service performing a specific function and decoupled from other services operating within its domain. In this architecture, if one service goes down temporarily, it will not affect the ability of other services to continue functioning.
 
----
-
 ## Other considerations
+---
 
 When considering `multitenancy` in user access, two crucial factors are performance and security. In a cloud system with multiple large tenants, the system must support consistent performance for all tenants, and high usage from one tenant should not degrade performance for others (i.e., noisy neighbor problem). Engineers must prevent data leakage and use appropriate strategies for data isolation, such as using multitenant tables and isolating data through views.
 
-
 A `shared-nothing architecture` means that each request is handled by a single node that does not share resources such as memory, disk, or CPU with other nodes. This architecture isolates data and resources to each node. Alternatively, multiple nodes can handle multiple requests and share resources, but this can result in resource contention. Another consideration is whether nodes should share the same disk and memory accessible by all nodes, known as a shared disk architecture. This architecture is useful for shared resources in case of a random node failure.
 
----
-
 ## Event-Driven Architecture
+---
 
 `Events` refer to changes in the state of something, such as a new order created by a customer or an update to an existing order.
 
 An `event-driven architecture` comprises components that enable the creation, update, and asynchronous transfer of events across different parts of the data engineering lifecycle. The workflow includes event production, routing, and consumption, with no tightly coupled dependencies among the producer, event router, and consumer.
 
----
-
 ## Types of Data Architecture
+---
 
 ### Data Warehouse
 
