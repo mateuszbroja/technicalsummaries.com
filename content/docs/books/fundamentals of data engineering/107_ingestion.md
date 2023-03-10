@@ -5,6 +5,7 @@ bookHidden: false
 ---
 
 # Ingestion
+---
 
 `Data ingestion` involves moving data from source systems to storage.
 
@@ -22,6 +23,7 @@ bookHidden: false
 - Conduct data-quality tests, capture data changes through logs, and perform checks and exception handling.
 
 ## Factors when designing your ingestion architecture:
+---
 
 **Bounded versus unbounded** - Unbounded data is real-time and ongoing, while bounded data is separated into buckets, often by time.
 
@@ -59,9 +61,9 @@ bookHidden: false
 
 **Data Migration** - Migrating data to a new database or environment is typically not straightforward, requiring bulk data transfer. File or object storage can serve as an excellent intermediate stage for transferring data.
 
----
-## Message and Stream Ingestion Considerations
 
+## Message and Stream Ingestion Considerations
+---
 
 **Schema Evolution** - Schema evolution is common in event data. A schema registry can version changes, while a dead-letter queue can help investigate unhandled events.
 
@@ -79,8 +81,9 @@ bookHidden: false
 
 **Location** - Integrating streaming across several locations can enhance redundancy. As a general rule, the closer your ingestion is to where the data originates, the better your bandwidth and latency.
 
----
+
 ## Ways to Ingest Data
+---
 
 - `Direct Database Connection`: Data can be pulled from databases for ingestion using `ODBC` or `JDBC`, but they struggle with nested data and sending data as rows. Some databases support native file export, while cloud data warehouses provide direct REST APIs for ingestion.
 

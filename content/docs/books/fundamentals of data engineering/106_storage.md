@@ -5,6 +5,7 @@ bookHidden: false
 ---
 
 # Storage
+---
 
 Storage is a fundamental component of the data engineering lifecycle and is essential for all its major stages, including ingestion, transformation, and serving. Layers of storage:
 {{< columns >}}
@@ -45,7 +46,7 @@ Storage is a fundamental component of the data engineering lifecycle and is esse
 
 ### Magnetic Disk Drive
 
-Magnetic disks store data using a ferromagnetic film that is magnetized by a read/write head. Despite being cheaper than SSDs per gigabyte of stored data, they have limitations such as slower transfer speed, seek time, rotational latency, and lower `input/output operations per second` (IOPS).
+`Magnetic disks` store data using a ferromagnetic film that is magnetized by a read/write head. Despite being cheaper than SSDs per gigabyte of stored data, they have limitations such as slower transfer speed, seek time, rotational latency, and lower `input/output operations per second` (IOPS).
 
 `Disk transfer speed`, the rate at which data can be read and written, does not scale in proportion with disk capacity. Data center magnetic drives have a maximum data transfer speed of 200-300 MB/s, meaning it would take over 20 hours to read a 30 TB magnetic drive at a speed of 300 MB/s.
 
@@ -53,7 +54,7 @@ However, they are still used in data centers due to their low storage costs and 
 
 ### Solid-State Drive
 
-SSDs store data as charges in flash memory cells, eliminating mechanical components. They can access random data in less than 0.1 ms and support transfer speeds of many gigabytes per second and tens of thousands of IOPS. SSDs are revolutionizing transactional databases, but they are not yet the default option for high-scale analytics data storage due to cost. Commercial SSDs cost nearly 10 times more per capacity than a magnetic drive.
+`SSDs` store data as charges in flash memory cells, eliminating mechanical components. They can access random data in less than 0.1 ms and support transfer speeds of many gigabytes per second and tens of thousands of IOPS. SSDs are revolutionizing transactional databases, but they are not yet the default option for high-scale analytics data storage due to cost. Commercial SSDs cost nearly 10 times more per capacity than a magnetic drive.
 
 ### Random Access Memory
 
@@ -133,8 +134,7 @@ Object storage is a type of storage that contains files of different types and s
 
 
 Object storage:
-- is immutable,
-- does not support random writes or appends,
+- is `immutable`,
 - support extremely performant parallel,
 - stores save data in several availability zones,
 - separating compute and storage (ephemeral clusters),
@@ -149,7 +149,7 @@ RAM provides fast access and transfer speeds, but is susceptible to data loss in
 
 ### The Hadoop Distributed File System
 
-Hadoop breaks files into blocks managed by the NameNode, which maintains metadata and block location. Blocks are replicated to increase durability and availability. Hadoop combines compute and storage resources, using MapReduce for in-place data processing, but other processing models are now more widely used. HDFS remains widely used in various applications and organizations.
+`Hadoop` breaks files into blocks managed by the NameNode, which maintains metadata and block location. Blocks are replicated to increase durability and availability. Hadoop combines compute and storage resources, using MapReduce for in-place data processing, but other processing models are now more widely used. HDFS remains widely used in various applications and organizations.
 
 ### Streaming Storage
 
@@ -184,7 +184,7 @@ Data lakes were initially built on Hadoop systems for cheap storage of raw, unpr
 
 ### Data Lakehouse
 
-The data lakehouse combines features of data warehouses and data lakes by storing data in object storage and offering robust table and schema support, incremental update and delete management, and table history and rollback. A lakehouse system is a metadata and file-management layer. Examples: Databricks.
+`The data lakehouse` combines features of data warehouses and data lakes by storing data in object storage and offering robust table and schema support, incremental update and delete management, and table history and rollback. A lakehouse system is a metadata and file-management layer. Examples: Databricks.
 
 
 ### Stream-to-Batch Storage Architecture

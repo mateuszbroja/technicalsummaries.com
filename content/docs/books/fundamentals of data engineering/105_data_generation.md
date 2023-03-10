@@ -4,6 +4,7 @@ title: "05: Data Generation in Source Systems"
 ---
 
 # Data Generation in Source Systems
+---
 
 Understanding the location, generation process, and unique properties of data is critical before working with raw data. It's important to keep in mind that source systems are typically beyond the control of data engineers.
 
@@ -15,6 +16,7 @@ Things to have in mind:
 - **Software engineering:** networking, authentication, access patterns, orchestration.
 
 ## Data sources
+---
 
 ### Files and Unstructured Data
 A file is a sequence of bytes, typically stored on a disk. These files have their quirks and can be:
@@ -74,7 +76,9 @@ ACID not required for app backends, but they guarantee consistency. Relaxing the
 OLAP systems are designed to handle large analytics queries but are not efficient in handling lookups of individual records. Such systems typically involve scanning large data blocks of at least 100 MB in size for each query. Trying to perform thousands of individual lookups per second can overload the system unless combined with a caching layer specifically designed for this purpose.
 
 ---
-## Important terms 
+## Important terms
+---
+
 ### Change Data Capture
 
 Change data capture (CDC) extracts each change event (insert, update, delete) that occurs in a database. CDC is used to replicate between databases in near real time or create an event stream for downstream processing. CDC is handled differently depending on the database technology, with relational databases often generating an event log that can be processed, while many cloud NoSQL databases can send a log or event stream to a target storage location.
@@ -106,8 +110,9 @@ Disadvantages of the insert-only pattern:
 - record lookups incur extra overhead,
 - this lookup operation is expensive to run.
 
----
+
 ## Database considerations
+---
 
 **Database management system (DBMS)**: consists of a storage engine, query optimizer, disaster recovery, and other key components for managing the database system.
 
@@ -123,8 +128,9 @@ Disadvantages of the insert-only pattern:
 
 **Consistency**: Is the database fully consistent, or does it support a relaxed consistency model (e.g., eventual consistency)? Does the database support optional consistency modes for reads and writes (e.g., strongly consistent reads)?
 
----
+
 ## Relational databases
+---
 
 Ideal for storing rapidly changing application state. The challenge for data engineers is to determine how to capture state information over time.
 
@@ -145,8 +151,9 @@ RDBMS systems have:
 
 Ideal for storing rapidly changing application state. The challenge for data engineers is to determine how to capture state information over time.
 
----
+
 ## Non-relational databases: NoSQL
+---
 
 NoSQL, which stands for not only SQL, refers to a whole class of databases that abandon the relational paradigm. NoSQL describes a universe of “new school” databases, alternatives to relational databases.
 
@@ -255,8 +262,8 @@ A time-series database:
 - joins are not common, though some quasi time-series databases such as Apache Druid support joins.
 
 
----
 ## Message Queues and Event-Streaming Platforms
+---
 
 A message is data transmitted between systems through a queue, while a stream is an append-only log of event records. Streams are used for long-term storage of event data and support complex operations such as aggregations and rewinding to specific points in time. Messages are typically removed from the queue after being delivered to a consumer.
 

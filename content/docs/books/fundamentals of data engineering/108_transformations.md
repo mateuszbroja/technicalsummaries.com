@@ -6,12 +6,14 @@ bookHidden: false
 
 # Queries, Modeling, and Transformation
 
+
 Data governance tips:
 - Keep credentials secure and avoid storing them in code.
 - Use data lineage tools are invaluable for tracking the transformation of data.
 - Consider implementing `Master Data Management (MDM)` to improve data accuracy and consistency.
 
 ## Query
+---
 A query allows you to retrieve and act on data (`R` from `CRUD`).
 
 **Data definition language (DDL)** defines the state of objects in your database. `CREATE`, `DROP`, `UPDATE`.
@@ -51,7 +53,6 @@ When working with commits in a database, it's important to consider the followin
 
 ### Basic query patterns on streams
 
-
 - The fast-follower approach.
 - `Session`, `fixed-time (tumbling)`, and `sliding windows` are common types of windows.
 - `Watermarks` are used to determine whether data in a window is within the established time interval or whether it's considered late.
@@ -59,6 +60,7 @@ When working with commits in a database, it's important to consider the followin
 
 
 ## Data Modeling
+---
 
 Data modeling includes three stages:
 - `Conceptual model`: describes the system's data and business logic, often visualized in an entity-relationship diagram.
@@ -67,7 +69,7 @@ Data modeling includes three stages:
 
 {{< hint info >}} **The grain of data** is the level of details at which data is stored. Modeling data at the lowest level of grain possible enables easy aggregation of highly granular datasets. {{< /hint >}}
 
-**Normalization** removes data redundancy and ensures referential integrity in a database by enforcing strict control over table and column relationships. It's a way of applying the `don't repeat yourself (DRY) principle` to data.
+{{< hint info >}} **Normalization** removes data redundancy and ensures referential integrity in a database by enforcing strict control over table and column relationships. It's a way of applying the `don't repeat yourself (DRY) principle` to data. {{< /hint >}}
 
 **Forms:**
 - `1NF`: Columns are unique and have a single value. Table has a unique primary key.
@@ -116,6 +118,7 @@ Modeling streaming data is challenging because of its unbounded and continuous n
 There isn't a consensus approach yet, but the Data Vault has been suggested as an option. **Streaming data comes in two main types: event streams and CDC**, and the data is often semistructured, such as JSON. The challenge with modeling streaming data is that the schema can change frequently, so the analytical database needs to have a flexible schema to accommodate these changes.
 
 ## Transformations
+---
 
 Transformations enhance and save data for downstream use, increasing its value in a scalable and reliable way. Orchestration is critical to transformations, combining many operations for consumption by downstream processes.
 
@@ -149,6 +152,7 @@ Top tips for coding in native Spark:
 
 
 ## Materialized Views, Federation, and Query Virtualization
+---
 
 Views are database objects that allow selecting from other tables as if they were a table. They can serve a security role and provide a current deduplicated picture of data or present common data access patterns. However, they don't do any precomputation, which can be a disadvantage compared to `materialized views`.
 
