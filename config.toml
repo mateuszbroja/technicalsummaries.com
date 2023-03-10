@@ -1,4 +1,4 @@
-baseURL = 'https://technicalsummaries.com/''
+baseURL = 'https://technicalsummaries.com/'
 languageCode = 'en-us'
 title = 'Technical summaries'
 theme = 'hugo-book'
