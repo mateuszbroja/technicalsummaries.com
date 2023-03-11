@@ -17,4 +17,5 @@ And for more information about me and my work, please visit my personal website:
 
 Thank you for visiting my website and I hope you find my book summaries helpful!
 
-![matbroya_logo](matbroya_small.png)
+
+![matbroya](/logo2.png)
