@@ -7,20 +7,18 @@ bookToc: false
 # Introduction
 ---
 
-Welcome to my technical book summary website.
+*Welcome to my technical book summary website.*
 
 It was originally created to help my students keep up with all concepts written in books I was suggesting to read. `technicalsummaries.com` contains of concise and valuable summaries of popular and important books across a variety of IT topics (**mostly regarding data engineering**). As a book enthusiast, I understand that not everyone has the time or resources to read every book that interests them.
 
 
-### Books that I have summarized
----
+### Books that I have summarized:
 
-- `Fundamentals of Data Engineering` - **Joe Reis**, **Matt Housley**.
+- *Fundamentals of Data Engineering* - **Joe Reis**, **Matt Housley**.
 
-### Next books
----
+### Plans for next books:
 
-- `Designing Data-Intensive Applications` - **Martin Kleppmann**.
+- *Designing Data-Intensive Applications* - **Martin Kleppmann**.
 
 ---
 

@@ -5,6 +5,7 @@ bookToc: false
 ---
 
 # About me
+---
 
 Hi there! My name is `Mateusz` and I'm a book enthusiast and content writer who enjoys summarizing and sharing insights from books I've read. I created a website where I share book summaries and reviews to help others get the most important takeaways without having to read the entire book.
 
@@ -16,4 +17,4 @@ And for more information about me and my work, please visit my personal website:
 
 Thank you for visiting my website and I hope you find my book summaries helpful!
 
-![matbroya](C:\sites\technicalsummaries.com\resources\_gen\assets\img\matbroya_small.png)
+![matbroya](content\docs\books\matbroya_small.png)
