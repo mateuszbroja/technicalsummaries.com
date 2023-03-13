@@ -16,7 +16,7 @@ Books that I have summarized:
 
 - `Fundamentals of Data Engineering` - **Joe Reis**, **Matt Housley**.
 
-Next books::
+Next books:
 
 - `Designing Data-Intensive Applications` - **Martin Kleppmann**.
 
