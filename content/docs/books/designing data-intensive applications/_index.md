@@ -2,6 +2,7 @@
 bookCollapseSection: true
 weight: 2
 bookToc: false
+title: "Designing Data-Intensive Applications"
 ---
 
 # Designing Data-Intensive Applications
