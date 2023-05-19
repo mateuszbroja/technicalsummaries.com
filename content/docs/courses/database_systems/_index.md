@@ -2,7 +2,7 @@
 bookCollapseSection: true
 weight: 2
 bookToc: false
-title: "Database Systems"
+title: "Database Systems by Prof. Dr. Jens Dittrich"
 ---
 
 # Database Systems by Prof. Dr. Jens Dittrich
