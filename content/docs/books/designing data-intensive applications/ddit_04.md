@@ -1,7 +1,7 @@
 ---
 weight: 4
 title: "04: Encoding and Evolution"
-bookHidden: true
+bookHidden: false
 ---
 
 # Encoding and Evolution
@@ -12,13 +12,16 @@ Programs have two types of data:
 - **In-memory data**: data in objects, structs, lists, arrays, hash tables, trees, etc. Optimized for access and manipulation by the CPU.
 - **Data to be sent over the network/stored on disk**: This data is encoded in a self-contained sequence of bytes. Optimized for size.
 
-DEF
-Translating the in-memory representation to a byte sequence is called encoding (aka. Serialization or marshalling). The reverse is called decoding.
+{{< hint warning >}}
+Translating the in-memory representation to a byte sequence is called **encoding** (aka. Serialization or marshalling). The reverse is called decoding.
+{{< /hint >}}
 
+---
 ## Evolution
 
 Relational databases conforms to one schema although that schema can be changed, there is one schema in force at any point in time. **Schema-on-read (or schemaless) contain a mixture of older and newer data formats.**
 
+---
 ### Compatibility
 
 Old and new versions of the code, and old and new data formats, may potentially all coexist. We need to maintain compatibility in both directions:
@@ -26,7 +29,7 @@ Old and new versions of the code, and old and new data formats, may potentially 
 - `Backward compatibility`, newer code can read data that was written by older code.
 - `Forward compatibility`, older code can read data that was written by newer code.
 
-EXAMPLE
+{{< hint info >}}
 **Rolling out Changes**
 
 Changes to a product's feature set often require updates to the data storage and application code. However, these updates cannot happen instantaneously. How can the updates be rolled out effectively?
@@ -39,8 +42,9 @@ Changes to a product's feature set often require updates to the data storage and
 2. **Client-side Application Solution**:
    - Relies on users to update their applications.
    - Requires users to manually update their software to access the latest features and changes.
+{{< /hint >}}
   
-
+---
 ## Formats for Encoding Data
 
 There are many ways to encode data (JSON, XML, Protos, Thrift, Avro).
@@ -62,118 +66,122 @@ Using programming language-specific encodings for in-memory objects is generally
 
 **It is better to use standardized encodings.**
 
-
+---
 ### JSON, XML, CSV
 
-Widely known, human-readable, supported.
+- **`JSON`**: Widely known, human-readable, and supported. Challenges with number parsing, lack of binary data support, and schema complexity.
+- **`XML`**: Widely known, human-readable, and supported. Challenges with number encodings, lack of binary data support, and schema complexity.
+- **`CSV`**: Widely supported for tabular data. Challenges with number encodings, lack of schema support, and manual handling of new rows or columns.
 
-Challenges:
-- XML and CSV number encodings - how to distinguish between a string and a number?
-- JSON: Number parsing for very large numbers. Case study: Twitter needs to encode two separate data points to capture the 64-bit tweet ID number: once as a number and once as a decimal string.
-- JSON and XML do not support binary data. The workaround is costly in terms of size.
-- XML/JSON: Complexity with schemas. If no schema, application needs to hardcode the encoding/decoding logic.
-- CSV: No schema. New rows or columns need to be manually handled. Not all implementations of CSV follow the same rules (eg. how to handle commas)
-
+---
 ### Binary Encoding
 
-The encoding format really matters when you work at a scale of terabytes.
+- **Compact**: Binary encodings are more space-efficient compared to text-based formats.
+- **Schemas**: Provide documentation and ensure data compatibility. Allows for checking backward and forward compatibility.
+- **Up-to-date Documentation**: Schemas ensure that the documentation is always accurate and reflects the latest changes.
+- **Efficient Type Checking**: Code generation from schemas enables type checking at compile time.
 
-Binary encodings are more compact, schemas provide documentation (and it is always up to date because that is required to decode), keeping a database of schemas allows for checking backward and forward compatibility, code generation is useful for type checking at compile time.
-
-#### JSON
-
-less verbose than XML but takes up a lot of space compared to binary formats
-- There are binary encoding options for XML and JSON
-- MessagePack can cut down the size, but there is a loss of human-readability. Any better options? Yes - Thrift and Protos.
+  | Format           | Created By | Encoding Formats | Schema Support?               | Backwards/Forwards Compatability                                                   |
+  | ---------------- | ---------- | ---------------- | ----------------------------- | ---------------------------------------------------------------------------------- |
+  | Avro             | Apache     | Binary           | Yes. Supports `union`, `null` | Yes. Writer/Reader schemas are auto-translated                                     |
+  | Protocol Buffers | Google     | Binary           | Yes. Supports `repeated`      | Yes. Can change field names, but can only add fields. New fields must be optional. |
+  | Thrift           | Facebook   | Binary           | Yes. Supports nested lists    | Yes. Can change field names, but can only add fields. New fields must be optional. |
 
 #### Apache Thrift 
 
-- Two binary encoding formats: BinaryProtocol and Compact Protocol
-- Field tags: A compact way of saying which field we are talking about, without having to spell out the field name. This is an improvement over MessagePack.
-- The Compact Protocol version has some additional compaction strategies over the BinaryProtocol design. 
+- Two binary encoding formats: `BinaryProtocol` and `Compact Protocol`
+- Field tags for compact field identification
+- `Compact Protocol` includes additional data compaction strategies
 
 #### Protocol Buffers
 
-- Similar to Thrift’s Compact Protocol.
-- Backward Compatibility: You cannot change a field tag - it would make all existing encoded data invalid. The tag is heavily used in the byte sequence (see Figure 4-4). Each new field needs a new tag number. New fields cannot be required, since new code cannot read data encoded by old code (no required data would have been encoded). To maintain backward compatibility, all fields after the initial deployment need to be optional or have a default value.
-- Forward Compatibility: Old code can ignore new tag numbers.
-- Protos allow an optional field to become repeated. New code with old data sees a list with zero or one elements. Old code reading new data sees only the last element of the list.
+- Similar to Thrift's Compact Protocol
+- Backward Compatibility: Field tags cannot be changed, new fields must be optional or have default values
+- Forward Compatibility: Old code can ignore new tag numbers, optional fields can become repeated
 
 #### Apache Avro
 
-Binary encoding format different from Protos and Thrift. 
+**Schema Management:**
+- Utilizes two distinct schema languages for humans and machines.
+- Requires the same schema for decoding which directs the data type.
+- Writer's and reader's schemas handle encoding and decoding; they need to be compatible.
 
-- Two schema languages: (1) one for human editing (2) one easily machine readable.
-- No tag numbers. Yet it is more compact!?
-- Encoding is just a list of values concatenated together.
-- To decode, you need the exact same schema. Schema is used to tell what data type to look at. Variable length data is supported.
-- Encoded data uses the “writer’s schema”: the schema used at write time. When it is read, it uses the “reader’s schema”: the schema the application code is relying on and it may have been generated during the build process.
-	- Interestingly, these do not have to be the same schema, they only need to be compatible. Differences are resolved. See figure 4-6.
+**Compatibility Handling:**
+- Adds or removes fields using default values to maintain compatibility.
+- Handles changes in field names and *union types* with certain limitations.
 
-- To maintain compatibility, fields can only be added or removed if there is a default value. Example: If a reader has a new schema and reads a record encoded with the old schema, the default value will be filled in.
-- There are backward compatibility limitations when it comes to changing field names and “union types”.
+**Schema Accessibility:**
+- Stores the writer's schema in several ways - top of the file, with record as version number, or communicated at connection setup.
 
-- How does the reader know what the writer’s schema was? In order to resolve differences, the reader needs that writer schema.
-	- Writers schema could exist at the top of the file. A common use of Avro is in Hadoop with millions of records of the same schema.
-	- Or - a version number for the writers schema may be included with the record. The reader can fetch the version number then lookup and fetch the right writers schema.
-	- Or - the schema version can be communicated at the beginning of a connection setup. See Avro RPC Protocol.
+**Schema Database:**
+- Encourages a database of schemas for compatibility checks and documentation.
 
-- A database of schemas would be useful to have in whichever option is used - documentation and a chance to check schema compatibility(?)
-- Avro is great for dynamically generating schemas. For example, if you have a relational database whos content needs to be dumped in a file.
-- Avro provides optional code generation for statically typed languages (Java, C++, C#) but it can also be used without any code generation. In contrast, Thrift and Protos rely on code generation. Avro is self-describing the way that JSON is - just open the file with an Avro library and read the data.
+**Dynamic Generation and Code Generation:**
+- Excels in dynamically generating schemas, ideal for relational databases dumping content into a file.
+- Supports optional code generation for statically typed languages.
+
+**Efficiency:**
+- Delivers a compact and tag-less encoding format.
+- Stands out in flexibility, efficient schema difference resolution, and performance.
   
-
+---
 ## Models of Dataflow:
 
 How does data flow between processes?
 
+  | Protocol | Data format                     | Schema                                                |
+  | -------- | ------------------------------- | ----------------------------------------------------- |
+  | REST     | JSON                            | Often no schema. Can be codegenned, eg. using Swagger |
+  | SOAP     | XML                             | Yes, using WSDL                                       |
+  | RPC      | Binary (eg. gRPC uses Protobuf) | Yes                                                   |
+  | GraphQL  | JSON                            | Yes                                                   |
+
+---
 ### Via Databases
-- Backward compatibility is necessary. There might be only one process writing and reading from the database. Future versions of that process and database need to read old data too. 
-- Forward compatibility is also necessary. Many processes will read and write to the database. Some processes may have gotten the latest update and are writing new data to the database with newer code. Then, older code could read that data.
-- Snag: What if new code writes a new field. Then old code updates that record. How should it handle this new field? It will be unknown.
-- “Data outlives code” - schema evolution must help code maintain compatibility with old data
 
-Data outlives code: While code is updated often, some data in your DB might be years old. It's critical that you can continue to read + parse this data, ideally without paying the cost of expensive data migrations.
+{{< hint warning >}}
+**Data outlives code**: While code is updated often, some data in your DB might be years old. It's critical that you can continue to read + parse this data, ideally without paying the cost of expensive data migrations.
+{{< /hint >}}
 
+- **Backward Compatibility:** Necessary for data reading by future versions of processes and databases.
+
+- **Forward Compatibility:** Essential due to multiple processes interacting with the database, some may be utilizing newer code.
+
+- **Compatibility Issues:** Challenges arise when new code introduces new fields, which may be unknown to old code.
+
+- **Data Longevity:** The schema evolution should aid code in maintaining compatibility with old data, as data often outlives code.
+
+---
 ### Via Services calls: REST and RPC
 
-- A key design goal of a service-oriented architecture is to make the application easier to change and maintain by making services independently deployable and evolable.
+- **Service-oriented Architecture:** Aim for independent deployment and evolution of services, resulting in a mix of server versions.
 
-	- This means that there could be old and new versions of servers running at the same time, often across many teams. Data encapsulated across clients and servers must be compatible across these versions.
+- **SOAP:** XML-based alternative to `REST`, facing interoperability challenges, hence less popular among smaller companies.
 
-- SOAP (alternative to REST, XML-based) has fallen out of favor in smaller companies due to interoperability challenges.
+- **RPC Model:** Aims to resemble a local function or method call, but suffers from unpredictability, latency, potential idempotence issues, and datatype compatibility challenges across languages.
 
-- The RPC model tries to make a request to a remote network service look the same as calling a function or method in your programming language (location transparency) - but there are differences:
+- **Streams:** Series of requests and responses over time.
 
-	- Network requests are unpredictable - problems outside your control happen and you need to anticipate them
-	- Timeouts can happen (but can’t happen with a local call) and are challenging to debug.
-	- Requests might be processed but the response isn’t getting through. Need idempotence otherwise there will be duplications of efforts.
-	- Network calls have higher latency
-	- Larger objects can’t be efficiently passed with a network call. But they can be with a pointer in a local call.
-	- Challenges with datatype compatibility across languages can crop up if the client and server are in different languages.
-    
+- **Promises:** Encapsulates asynchronous actions for simpler parallelization.
 
-- Streams: a call consists of not just one request and one response, but a series of requests and responses over time
-- Promises: encapsulates async actions that may fail. Simplifies parallelization.
-- RPC protocols with a binary encoding have better performance than generic JSON over REST. But RESTful APIs have other advantages: great for experimentation and debugging, widely supported, lots of tools.
-- RPC frameworks are mainly used on requests between services in the same organization. REST is predominant for public APIs.
-- Backward and forward compatibility properties of an RPC are inherited from the encoding it uses. 
-	- Note: RPC is often used for communication across the organization. Since the service has no control over clients and cannot force an upgrade, multiple versions of the service API might need to be supported.
-	- Versioning can be used for REST. Version tracking can happen in a database for users with an API key or tracked in the request header.
-    
+- **RPC vs REST:** `RPC` protocols with binary encoding perform better than `JSON` over `REST`, but `RESTful APIs` offer benefits like easy experimentation, debugging, and wide tool support.
 
+- **Backward and Forward Compatibility:** `RPC` inherits these properties from its encoding. Multiple versions of service API may need to be supported due to its usage across organizations.
+
+
+- **Versioning:** Can be applied in `REST`. Tracked in the database for users with an API key or in the request header.
+
+---
 ### Via asynchronous message passing
 
-- Messages are sent to a “Queue” or “Topic”. Message broker ensures that the message is delivered to 1+ “consumers” or “subscribers” to that topic.
-- Async message passing systems are somewhere in between RPCs and databases. Benefits:
-	- Recipient might be overloaded and this acts as a buffer, improves reliability
-	- Prevents messages from being lost: Can redeliver messages to a process that has crashed
-	- The sender doesn’t need to know the IP of the receiver. Useful if the IP keeps changing.
-	- One message can be sent to many recipients.
-	- Decouples sender and receiver.
+- **Message Brokering:** Messages are sent to a `Queue` or `Topic` and delivered to consumers or subscribers by a message broker.
 
-- Data is sent via a message broker - an intermediary that is NOT a network connection, but a temporary store of the message.
-- The sender does not wait for the message to be delivered. 
-- Consumers of a topic might even process the message and enqueue to another topic! Or it could enqueue to a response queue so that the original sender gets a reply.
-- You can use any encoding format. As long as that encoding is backward and forward compatible, publishers and consumers can be deployed independently and rolled out.
-- Distributed actor frameworks: logic is encapsulated in actors, not threads. The application is scaled across many nodes. Location transparency is supported: the sender and receiver can be on the same node or different nodes, and it works better than in RPC because the actor model assumes that messages may be lost. <<< more examples needed here. I don’t fully understand why the actor models handling of messages being lost is better for location transparency.
+- **Benefits of Async Message Passing:** Acts as a buffer for overloaded recipients, improves reliability, prevents message loss, handles changing IPs, and allows for multicasting. Decouples sender and receiver.
+
+- **Message Delivery:** Occurs through a message broker, which serves as a temporary message store. The sender does not wait for the message delivery.
+
+- **Processing:** Consumers may process the message and enqueue it to another topic or a response queue for reply to the sender.
+
+- **Encoding:** Any format can be used as long as it supports backward and forward compatibility. This allows for independent deployment and rollout of publishers and consumers.
+
+- **Distributed Actor Frameworks:** Logic is contained within actors, not threads. Supports scaling across multiple nodes and location transparency. Assumes potential message loss.
