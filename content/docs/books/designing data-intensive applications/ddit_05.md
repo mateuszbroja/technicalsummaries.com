@@ -7,10 +7,8 @@ bookHidden: false
 # Replication
 ---
 
-Replication means keeping a copy of the same data on multiple machines that are connected via a network.
-
 {{< hint warning >}}
-
+**Replication** means keeping a copy of the same data on multiple machines that are connected via a network.
 {{< /hint >}}
 
 Reasons why you might want to replicate data:
@@ -29,27 +27,28 @@ The challenge with replication is how to deal with writes (changes) because ever
 ---
 ### How to create leaders and followers
 
-1. Leader Selection:
+1. **Leader Selection**:
    - One replica is designated as the leader/master/primary.
    - Writes are directed to the leader node.
-
-2. Follower Replication:
+2. **Follower Replication**:
    - Other replicas are followers/read replicas/slaves/secondaries.
    - The leader sends data changes to followers via replication logs or change streams.
-
-3. Read and Write Operations:
+3. **Read and Write Operations**:
    - Reads can be performed on both the leader and followers.
    - Writes are only accepted on the leader.
 
-**Adding New Followers:**
-   - Sync a snapshot from the leader to the new follower.
-   - Request all updates that occurred since the snapshot.
-
-**Replication Formats:**
-- Statement-based replication: Replicate data using evaluated SQL statements on each node.
-- Write-ahead log replication: Sync LSM-trees and B-trees directly using a replication log.
-- Logical replication: Use an engine-agnostic data structure to represent records for replication.
-- Trigger-based replication: Custom replication schemes using triggers for handling conflicts.
+{{< tabs "replication" >}}
+{{< tab "Adding New Followers" >}}
+- Sync a snapshot from the leader to the new follower.
+- Request all updates that occurred since the snapshot.
+{{< /tab >}}
+{{< tab "Replication Formats" >}}
+- `Statement-based replication`: Replicate data using evaluated SQL statements on each node.
+- `Write-ahead log replication`: Sync LSM-trees and B-trees directly using a replication log.
+- `Logical replication`: Use an engine-agnostic data structure to represent records for replication.
+- `Trigger-based replication`: Custom replication schemes using triggers for handling conflicts.
+{{< /tab >}}
+{{< /tabs >}}
 
 ---
 ### Database Leadership Types
@@ -119,8 +118,14 @@ Asynchronous replication can cause database inconsistencies (_eventual consisten
 
 Certain consistency models help determine application behavior during replication lag:
 
-- **Reading Your Own Writes**: _Read-after-write consistency_ or _read-your-writes consistency_ ensures users will always see their own updates upon page reload.
+{{< columns >}}
+**Reading Your Own Writes**: _Read-after-write consistency_ or _read-your-writes consistency_ ensures users will always see their own updates upon page reload.
 
-- **Monotonic Reads**: Prevents the scenario of users witnessing data _moving backward in time_. Once users see data at a point in time, they should never see it from an earlier point.
+<--->
 
-- **Consistent Prefix Reads**: Ensures that a sequence of writes viewed by a reader appears in the same order as written. This helps users see data in a causally logical order, such as a question and its corresponding reply.
+**Monotonic Reads**: Prevents the scenario of users witnessing data _moving backward in time_. Once users see data at a point in time, they should never see it from an earlier point.
+
+<--->
+**Consistent Prefix Reads**: Ensures that a sequence of writes viewed by a reader appears in the same order as written. This helps users see data in a causally logical order, such as a question and its corresponding reply.
+
+{{< /columns >}}
