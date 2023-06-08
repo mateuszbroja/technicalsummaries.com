@@ -14,11 +14,8 @@ bookHidden: false
 ---
 ## Overview
 
-Real-world reads and writes are complex. Things can go wrong half-way through for a lot of reasons (DB hardware/software failure, application failure, network interrupt, concurrency issues, race conditions, etc.).
+Real-world reads and writes are complex. Things can go wrong half-way through for a lot of reasons (DB hardware/software failure, application failure, network interrupt, concurrency issues, race conditions, etc.). **A transaction** is a way for an application to group a set of reads/writes into a logical unit. Either the whole unit succeeds (`commit`), or fails and can be retried (`abort` + `rollback`.
 
-{{< hint warning >}}
-**A transaction** is a way for an application to group a set of reads/writes into a logical unit. Either the whole unit succeeds (`commit`), or fails and can be retried (`abort` + `rollback`.
-{{< /hint >}}
 
 {{< hint info >}}
 **History of Transactions**
@@ -30,16 +27,18 @@ Real-world reads and writes are complex. Things can go wrong half-way through fo
 ---
 ## ACID and BASE
 
-{{< hint warning >}}
+{{< hint danger >}}
+**To remember**
+
 `ACID` or `BASE` compliant does not provide clear and standardized guarantees. It is important to carefully understand the specific properties and trade-offs offered by a system before relying on these terms as indicators of its behavior.
 {{< /hint >}}
 
 **ACID** (`Atomicity`, `Consistency`, `Isolation`, `Durability`) and **BASE** (`Basically Available`, `Soft state`, `Eventual consistency`) are the two common sets of properties for database transactions. 
 
 * **Atomicity**: Enables aborting a transaction on error, discarding all writes from that transaction. It's not about `concurrency` but `abortability`.
-* **Consistency**: Data-model-specific invariants must always hold true. **It's a property of the application not really of the database**.
+* **Consistency**: Data-model-specific invariants must always hold true. It's a property of the application not really of the database.
 * **Isolation**: Ensures that concurrently executing transactions are isolated from each other, providing a result as if they had run serially.
-* **Durability**: Guarantees that committed data will not be lost, even if there's a hardware fault or database crash. This is achieved through writing to nonvolatile storage or replication to some number of nodes. 
+* **Durability**: Guarantees that committed data will not be lost, even if there's a hardware fault or database crash. This is achieved through writing to nonvolatile storage or replication to some number of nodes.
 
 
 {{< columns >}}
@@ -53,21 +52,9 @@ Real-world reads and writes are complex. Things can go wrong half-way through fo
 In relational databases, a transaction is typically defined as the set of operations executed between a `BEGIN TRANSACTION` and `COMMIT` statement. This grouping ensures that all operations within the transaction are treated atomically, consistently, and isolated from concurrent operations. **However, many nonrelational databases do not provide a built-in way to explicitly group operations into transactions.**
 
 ---
-## Weak Isolation Levels
+## Race Conditions
 
-Concurrency issues only arise when one transaction reads data that is concurrently modified by another transaction, or when two transactions simultaneously modify the same data. Isolation levels define how these situations are handled.
-
-|                           | Read Committed                                                                       | Snapshot Isolation                                                             | Serializable                                                                                                                                                                      |
-| ------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Also known as             |                                                                                      | Repeatable read (PostgreSQL, MySQL), Serializable (Oracle)                     |                                                                                                                                                                                   |
-| Race conditions prevented | Dirty read, Dirty Write                                                              | All of Read Committed, plus: Read skew, Lost updates                           | All of Snapshot Isolation, plus: Write skew                                                                                                                                       |
-| Implementation            | Row-level locks for writes, serving old values for reads when writes are in progress | Row-level locks for writes, Multi-Version Concurrency Control (MVCC) for reads | Transactions executed in serial order (often using stored procedures, only possible when data fits in memory), Two-phase locking ("2PL"), Serializable Snapshot Isolation ("SSI") |
-
-
----
-## Kinds of Race Conditions and Isolation Levels
-
-Concurrency control in databases introduces various kinds of race conditions, which can be mitigated using different isolation levels:
+Concurrency control in databases introduces various kinds of race conditions:
 
 - **Dirty read**: Transaction B reads Transaction A's uncommitted writes.
 - **Dirty writes**: Transaction B overwrites Transaction A's uncommitted writes.
@@ -79,6 +66,30 @@ Concurrency control in databases introduces various kinds of race conditions, wh
 Implementing these fault-tolerant mechanisms is complex and may affect system performance. Despite the challenges of concurrency control, databases strive to provide `transaction isolation` to hide these issues. Nevertheless, achieving serializable isolation often comes with a performance cost, leading many systems to opt for weaker isolation levels that can handle some, but not all, concurrency issues.
 
 ---
+
+### Preventing Lost Updates
+
+Lost updates can occur during concurrent read-modify-write cycles. Several strategies can prevent this:
+
+- **Atomic Write Operations**: Databases like MongoDB and Redis offer atomic operations to perform local modifications, eliminating the need for read-modify-write cycles.
+- **Explicit Locking**: Applications can explicitly lock objects they plan to update.
+- **Automatic Detection of Lost Updates**: Transactions execute in parallel. If a lost update is detected, the transaction is aborted, forcing a retry of the read-modify-write cycle.
+- **Compare-and-set**: Updates are made only if the current value matches the previously read value.
+- **Conflict Resolution and Replication**: In multi-leader or leaderless replication systems, concurrent writes create multiple versions of a value. These versions are later resolved and merged.
+
+
+## Isolation Levels
+
+Concurrency issues only arise when one transaction reads data that is concurrently modified by another transaction, or when two transactions simultaneously modify the same data. Isolation levels define how these situations are handled.
+
+
+|                           | Read Committed                                                                       | Snapshot Isolation                                                             | Serializable                                                                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Race conditions prevented** | Dirty read, Dirty Write                                                              | All of Read Committed, plus: Read skew, Lost updates                           | All of Snapshot Isolation, plus: Write skew                                                                                                                                       |
+| **Implementation**            | Row-level locks for writes, serving old values for reads when writes are in progress | Row-level locks for writes, Multi-Version Concurrency Control (MVCC) for reads | Transactions executed in serial order (often using stored procedures, only possible when data fits in memory), Two-phase locking ("2PL"), Serializable Snapshot Isolation ("SSI") |
+
+---
+
 ### Read Committed
 
 Read committed is a guarantee in database systems that:
@@ -100,37 +111,26 @@ Snapshot Isolation and Repeatable Read are mechanisms in database systems to man
 In both, snapshot isolation and repeatable read, handling indexes in a multi-version database can be challenging. One approach is to let the index point to all versions of an object and filter out non-visible object versions during an index query.
 
 ---
-### Preventing Lost Updates
-
-Lost updates can occur during concurrent read-modify-write cycles. Several strategies can prevent this:
-
-- **Atomic Write Operations**: Databases like MongoDB and Redis offer atomic operations to perform local modifications, eliminating the need for read-modify-write cycles.
-- **Explicit Locking**: Applications can explicitly lock objects they plan to update.
-- **Automatic Detection of Lost Updates**: Transactions execute in parallel. If a lost update is detected, the transaction is aborted, forcing a retry of the read-modify-write cycle.
-- **Compare-and-set**: Updates are made only if the current value matches the previously read value.
-- **Conflict Resolution and Replication**: In multi-leader or leaderless replication systems, concurrent writes create multiple versions of a value. These versions are later resolved and merged.
-
----
-### Write Skew and Phantoms
-
-Write skew happens when two transactions read the same objects, then update some of those objects, leading to inconsistency (like both doctors going off call). Preventing write skew requires true serializable isolation or explicit locking.
-
----
 ### Serializability
 
-Serializability, the strongest isolation level, ensures that the outcome of executing transactions in parallel is the same as if they were executed one at a time. Techniques for achieving this include executing transactions in serial order, two-phase locking, and serializable snapshot isolation.
+{{< hint warning >}}
+**Serializability**, the strongest isolation level, ensures that the outcome of executing transactions in parallel is the same as if they were executed one at a time. Techniques for achieving this include `executing transactions in serial order`, `two-phase locking`, and `serializable snapshot isolation`.
+{{< /hint >}}
 
----
-### Actual Serial Execution
+Weak isolation levels protect against some of those anomalies but leave you, the application developer, to handle others manually (e.g., using `explicit locking`). Only serializable isolation protects against all of these issues.
 
-Actual serial execution, adopted by `VoltDB`/`H-Store`, `Redis`, and `Datomic`, is the simplest way to avoid concurrency problems by executing one transaction at a time. However, to improve efficiency, these systems require the entire transaction code to be submitted as a stored procedure.
+{{< tabs "Serializability" >}}
+{{< tab "Actual Serial Execution" >}}
+Actual serial execution, adopted by `VoltDB`/`H-Store`, `Redis`, and `Datomic`, is the simplest way to avoid concurrency problems by executing one transaction at a time.
 
----
-### Two-Phase Locking (2PL)
+However, to improve efficiency, these systems require the entire transaction code to be submitted as a stored procedure.
+{{< /tab >}}
+{{< tab "Two-Phase Locking (2PL)" >}}
+Two-phase locking allows concurrent read of an object but requires exclusive access for write operations.
 
-Two-phase locking allows concurrent read of an object but requires exclusive access for write operations. This method protects against race conditions but has limitations due to possible deadlocks and slow transaction throughput at high percentiles.
-
----
-### Serializable Snapshot Isolation (SSI)
-
+This method protects against race conditions but has limitations due to possible deadlocks and slow transaction throughput at high percentiles.
+{{< /tab >}}
+{{< tab "Serializable Snapshot Isolation (SSI)" >}}
 `SSI` ensures full serializability with better performance than snapshot isolation. It uses optimistic concurrency control, meaning transactions continue unless a conflict occurs. It's more efficient than pessimistic concurrency control methods, provided transaction contention is low. Compared to other methods, `SSI` avoids blocking transactions and can utilize multiple CPU cores. However, its performance depends on the abort rate and it requires short read-write transactions.
+{{< /tab >}}
+{{< /tabs >}}
