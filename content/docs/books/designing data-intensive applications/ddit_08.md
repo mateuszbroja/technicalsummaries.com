@@ -1,7 +1,7 @@
 ---
 weight: 8
 title: "08: The Trouble with Distributed Systems"
-bookHidden: true
+bookHidden: false
 ---
 
 # The Trouble with Distributed Systems
