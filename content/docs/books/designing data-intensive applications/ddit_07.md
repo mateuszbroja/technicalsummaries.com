@@ -77,6 +77,7 @@ Lost updates can occur during concurrent read-modify-write cycles. Several strat
 - **Compare-and-set**: Updates are made only if the current value matches the previously read value.
 - **Conflict Resolution and Replication**: In multi-leader or leaderless replication systems, concurrent writes create multiple versions of a value. These versions are later resolved and merged.
 
+---
 
 ## Isolation Levels
 
