@@ -2,6 +2,7 @@
 title: 'technical summaries'
 type: docs
 bookToc: false
+bookComments: false
 ---
 
 # Introduction

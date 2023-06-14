@@ -2,6 +2,8 @@
 bookCollapseSection: true
 weight: 1
 bookToc: false
+bookComments: false
+
 ---
 
 # Fundamentals of Data Engineering
