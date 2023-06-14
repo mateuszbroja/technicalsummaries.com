@@ -1,7 +1,7 @@
 ---
 weight: 12
 title: "12: The Future of Data Systems"
-bookHidden: true
+bookHidden: false
 ---
 
 # The Future of Data Systems
