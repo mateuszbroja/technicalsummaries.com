@@ -19,5 +19,5 @@ enableGitInfo = true
   BookSearch = true
   BookComments = true
   BookPortableLinks = true
-  BookEditPath = ''
+  BookEditPath = 'edit/main'
   BookCommitPath = 'commit'
