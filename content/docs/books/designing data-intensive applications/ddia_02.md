@@ -7,21 +7,15 @@ bookHidden: false
 # Data Models and Query Languages
 ---
 
-*Data models are perhaps the most important part of developing software, because they have such a profound effect: not only on how the software is written, but also on how we think about the problem that we are solving.*
-
-
 Most applications are built by layering one data model on top of another:
 
-1. objects or data structures and APIs,
-2. general-purpose data model (e.g., JSON or XML documents),
-3. bytes in memory, on disk, or on a network,
-4. electrical currents, pulses of light, magnetic fields.
+`Objects or data structures and APIs` --> `General-purpose data model (e.g., JSON or XML documents)` --> `Bytes in memory, on disk, or on a network` --> `Electrical currents, pulses of light, magnetic fields`
 
 ---
 
 ## Data Models
 
-SQL, based on Edgar Codd's relational model from 1970, is the widely recognized and dominant data model for over 25-30 years.
+`SQL`, based on Edgar Codd's relational model from 1970 is a widely recognized and dominant data model.
 
 The roots of relational databases lie in business data processing, which can be categorized into two main use cases:
 
@@ -39,13 +33,15 @@ The roots of relational databases lie in business data processing, which can be 
 - Reporting
 {{< /columns >}}
 
+---
+
 Over the years, there have been many competing approaches to data storage and querying:
 - `Network model` (1970s-1980s)
 - `Hierarchical model` (1970s-1980s)
 - `Object databases` (brief resurgence in late 1980s and early 1990s)
 - `XML databases` (limited adoption since early 2000s)
 
-Relational databases have generalized well beyond business data processing and remain a key driving force behind the web today.
+Relational databases have generalized well beyond business data processing and remain a key driving force even behind the web today.
 
 ---
 ### The Birth of NoSQL
@@ -54,24 +50,24 @@ Relational databases have generalized well beyond business data processing and r
 
 **Several driving forces behind the rise of NoSQL include:**
 - Need for greater scalability
-- Widespread preference for free and open source software
+- Widespread preference for free and open-source software
 - Specialized query operations
 - Frustration with the restrictiveness of relational schemas
 
-NoSQL diverging into two main directions:
+NoSQL is diverging into two main directions:
 1. **Document databases**: designed for use cases where data is stored in self-contained documents, with limited relationships between documents.
-2. **Graph databases**: tailored for use cases where any element can be potentially related to everything else, emphasizing complex relationships.
+2. **Graph databases**: tailored for use cases where any element can potentially relate to everything else, emphasizing complex relationships.
 
-All three models - document, relational, and graph - are widely utilized today, with each excelling in its respective domain.
+All three models - document, relational, and graph - are widely utilized today, each excelling in its respective domain.
 
 ---
 ### Types of relationships
 
 | Relationship Type  | Description                                                                                                                                                  | Example                                                                                            |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| **One-to-One (1:1)**   | Each record in Table A is associated with exactly one record in Table B, and vice versa.                                                                     | An employee has one employee ID, and an employee ID is assigned to only one employee.              |
+| **One-to-One (1:1)**   | Each record in Table A is associated with exactly one record in Table B, and vice versa.                                                                     | An employee has one employee ID and an employee ID is assigned to only one employee.              |
 | **One-to-Many (1:N)**  | Each record in Table A can be associated with multiple records in Table B, but each record in Table B is associated with only one record in Table A.         | A customer can have multiple orders, but each order is associated with only one customer.          |
-| **Many-to-One (N:1)**  | Each record in Table A is associated with only one record in Table B, but each record in Table B can be associated with multiple records in Table A.         | Multiple students can enroll in a single course, but each course is taught by only one instructor. |
+| **Many-to-One (N:1)**  | Each record in Table A is associated with only one record in Table B, but each record in Table B can be associated with multiple records in Table A.         | Order can have only one customer, but a customer can have multiple orders. |
 | **Many-to-Many (N:N)** | Multiple records in Table A can be associated with multiple records in Table B, and vice versa. This is typically implemented using a bridge/junction table. | A student can be enrolled in multiple courses, and each course can have multiple students.         |
 
 ---
@@ -79,19 +75,12 @@ All three models - document, relational, and graph - are widely utilized today, 
 
 The SQL data model faces criticism due to the **impedance mismatch** between relational tables and object-oriented programming languages. Object-oriented models represent data as objects with properties and methods, while relational models use tables with columns and rows. Flattening object hierarchies or joining multiple tables may be necessary. This requires a translation layer, like object-relational mapping (ORM) tools, adding complexity in handling data.
 
-{{< hint info >}}
-**LinkedIn Example**  
-- Unique identifier: user_id
-- Columns on the users table: first_name, last_name
-- One-to-many relationship from the user to: job positions, education
-{{< /hint >}}
-
 How to represent this One-to-many relationship:
-- **Separate Tables**: Positions, education, and contact information stored in separate tables with foreign key references.
-- **Structured Datatypes**: SQL versions support structured datatypes, XML, and JSON for storing multi-valued data within a single row.
+- **Separate Tables**: Positions, education, and contact information are stored in tables with foreign key references.
+- **Structured Datatypes**: SQL versions support structured datatypes, XML, and JSON storing multi-valued data within a single row.
 - **JSON/XML as a text**: Encode jobs, education, and contact info as JSON or XML documents stored in a text column in the database.
 
-For a self-contained document-like data structure like a résumé, a JSON representation is appropriate. It also provides better data locality. Document-oriented databases such as `MongoDB`, `RethinkDB`, `CouchDB`, and `Espresso` support this model.
+For a self-contained document-like data structure like a résumé, a JSON representation is appropriate. It also provides a better data locality. Document-oriented databases such as `MongoDB`, `RethinkDB`, `CouchDB`, and `Espresso` support this model.
 
 ```json
 {
@@ -141,7 +130,7 @@ The solutions proposed to address the limitations of the hierarchical model were
 - the network model (`CODASYL`).
 {{< /hint >}}
 
-Relational and document databases **both use unique identifiers** (foreign keys in relational, document references in document) to represent many-to-one and many-to-many relationships.
+Relational and document databases **both use unique identifiers** (foreign keys in relational, document references in the document) to represent many-to-one and many-to-many relationships.
 
 ---
 ### Graph-Like Data Models
@@ -149,7 +138,7 @@ Relational and document databases **both use unique identifiers** (foreign keys 
 Many-to-many relationship:
 - **Document model**: Suitable for applications with mostly one-to-many relationships or tree-structured data.
 - **Relational model**: Handles simple cases of many-to-many relationships.
-- **Graph model**: More natural for modeling complex relationships and interconnected data.
+- **Graph model**: More natural for modelling complex relationships and interconnected data.
 
 A graph data model consists of vertices (nodes/entities) and edges (relationships/arcs). Graphs are good for evolvability: as you add features to your application, a graph can easily be extended. Various types of data can be represented as a graph, including:
 
@@ -157,13 +146,13 @@ A graph data model consists of vertices (nodes/entities) and edges (relationship
 - Web graphs: Vertices represent web pages, and edges represent links between pages.
 - Road or rail networks: Vertices represent junctions, and edges represent roads or railway lines.
 
-Facebook, for example, maintains a single graph that incorporates different types of vertices and edges. Vertices can represent people, locations, events, check-ins, and comments, while edges represent friendships, check-ins at locations, comments on posts, event attendance, and more.
+Facebook, for example, maintains a single graph incorporating different types of vertices and edges. Vertices can represent people, locations, events, check-ins, and comments, while edges represent friendships, check-ins at locations, comments on posts, event attendance, and more.
 
 ---
 
 ## Relational Versus Document Databases
 
-The main arguments in favor of the document data model are:
+The main arguments in favour of the document data model are:
 - Schema flexibility
 - Better performance due to locality
 - Closer alignment with application data structures
@@ -204,9 +193,9 @@ For highly interconnected data, the document model can be awkward, the relationa
 - Updating the document often requires rewriting the entire document.
 - It is advisable to keep documents small and avoid writes that increase document size to maintain performance.
 
-Locality is utilized in other databases:
-- Google's Spanner: Allows table rows to be interleaved or nested within a parent table for managing locality.
-- Bigtable (used by Cassandra and HBase): Implements the column-family concept to manage locality.
+The locality is utilized in other databases:
+- `Google's Spanner`: Allows table rows to be interleaved or nested within a parent table for managing locality.
+- `BigTable`, `Cassandra` and `HBase`: Implements the column-family concept to manage locality.
 
 ---
 ### Future
@@ -232,7 +221,7 @@ Data models have specific query languages or frameworks:
 |----------------------|-----------------------------------------|------------------------------------------------|
 | **Used in**              | SQL                                     | CODASYL, Many commonly used programming languages  |
 | **Definition**           | You specify the pattern of the data you want but not how to achieve that goal   | An imperative language tells the computer to perform certain operations in a certain order  |
-| **Parallel Execution**   | Good because the database is free to use a parallel implementation of the query language. CPUs are getting faster by adding more cores, not by running at significantly higher clock speeds  | Imperative code is very hard to parallelize across multiple cores and multiple machines because it specifies instructions that must be performed in a particular order. |
+| **Parallel Execution**   | Good because the database can use a parallel implementation of the query language. CPUs are getting faster by adding more cores, not by running at significantly higher clock speeds  | Imperative code is very hard to parallelize across multiple cores and machines because it specifies instructions that must be performed in a particular order. |
 
 Examples:
 
@@ -297,5 +286,5 @@ RETURN person.name
   
 **The query looks for a vertex called `person` that satisfies the following criteria:**
 
-1. The person has a `BORN_IN` edge leading to a vertex connected by a chain of `WITHIN` edges, ultimately reaching a `Location` vertex with the name `United States`.
-2. The person also has a `LIVES_IN` edge leading to a vertex connected by a chain of `WITHIN` edges, ultimately reaching a `Location` vertex with the name `Europe`.
+1. The person has a `BORN_IN` edge leading to a vertex connected by a chain of `WITHIN` edges, ultimately reaching a `Location` vertex named `United States`.
+2. The person also has a `LIVES_IN` edge leading to a vertex connected by a chain of `WITHIN` edges, ultimately reaching a `Location` vertex named `Europe`.
