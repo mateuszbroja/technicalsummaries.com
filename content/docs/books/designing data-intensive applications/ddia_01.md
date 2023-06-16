@@ -94,7 +94,9 @@ Online systems prioritize **response time**, specifically the time between a cli
 
 {{< hint warning >}}
 **Scaling up** or **vertical scaling**: Moving to a more powerful machine
+
 **Scaling out** or **horizontal scaling**: Distributing the load across multiple smaller machines.
+
 **Elastic systems**: Automatically add computing resources when detected load increases. Quite useful if the load is unpredictable.
 {{< /hint >}}
 
