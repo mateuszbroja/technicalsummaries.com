@@ -1,5 +1,7 @@
 # technicalsummaries.com — AI Instructions
 
+> **⚠️ PUBLIC REPO** — this repo is visible to everyone. Do not commit sensitive data, credentials, API keys, or personal information.
+
 README.md is the main documentation for this project. Keep it up to date with any structural or functional changes.
 
 Technical book summaries site built with Hugo.
