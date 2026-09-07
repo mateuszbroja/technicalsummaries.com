@@ -1,5 +1,13 @@
 # Technical summaries
 
+## Session instructions
+
+This is a personal repository. Before working, read [.ai/global_instructions.md](.ai/global_instructions.md) in full unless the identical shared instructions are already present in the session. Use the active Lucid prose style; if it is unavailable, read [lucid.md](.ai/lucid.md). These are explicit read instructions for both local and remote sessions.
+
+[AGENTS.md](AGENTS.md) is a relative symlink to this document. Edit this CLAUDE.md for repository facts. Read instructions in the target subdirectory before changing its files.
+
+Use native skills when available. If a user-level skill is missing, read [catalog.md](.ai/skills/catalog.md) and its matching bundled SKILL.md. This repository has no selected native repository skills. Do not assume another checkout or the owner's Mac is accessible. Managed instruction and skill copies come from meta-repo ai_sync.yaml; edit their sources and synchronize.
+
 This public repository contains a Hugo site of technical book summaries.
 
 ## Hard requirements
@@ -27,23 +35,3 @@ Add summaries under content/docs. Keep generated resources and upstream theme fi
 ## References
 
 Read [site.md](docs/site.md) for content and publishing references.
-
-## AI configuration
-
-Claude loads managed copies in [.claude/rules/](.claude/rules/). Codex loads this entry document and the selected rules from the generated [AGENTS.md](AGENTS.md). Edit this CLAUDE.md for repository facts. Edit shared rules and skills in meta-repo, then run sync-ai-config. Never edit generated copies. Read any instructions in the target subdirectory before changing its files.
-
-## Available skills
-
-The following skills are inherited from user scope. Keep one global copy per runtime. In a container without those global copies, read their sources from the attached meta-repo before using them.
-
-- `apps-catalog`: Update the personal application catalog and launch commands.
-- `dropbox-photo-intake`: Process a requested Dropbox photo batch.
-- `github-connector`: Choose the GitHub workflow for a requested repository operation.
-- `local-static-serve`: Add or repair a local app start command.
-- `markdown-prose-audit`: Perform an explicitly requested full Markdown prose audit.
-- `notedrop`: Save takeaways only when an explicit save request contains notedrop or dropnote.
-- `product-research`: Research products and buying decisions using current sources.
-- `user-context`: Apply the standing language, response and personal-context preferences.
-- `visual-plan`: Create an explicitly requested local visual plan.
-
-Claude also has the user-level `audio-essay` skill for an explicitly requested narrated MP3.

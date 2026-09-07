@@ -1,11 +1,11 @@
 ---
-paths:
-  - "**/*.py"
+name: python-conventions
+description: "Apply the owner's Python conventions when creating, editing or reviewing Python files. Includes new files before the first write."
 ---
 
-# Python rules
+# Python conventions
 
-Python-specific rules on top of [coding_rules.md](../coding_rules.md) - the environment (conda) and the general principles live there.
+Use `coding-practices` for the execution environment and implementation workflow.
 
 - Max line length 120.
 - Prefer namespace packages. Add `__init__.py` only when an import or packaging contract requires it, and preserve existing package entry points unless the task includes their removal.

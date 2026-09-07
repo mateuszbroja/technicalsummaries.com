@@ -1,9 +1,9 @@
 ---
-paths:
-  - "**/*.{css,scss,js,rb,html}"
+name: frontend-conventions
+description: "Apply the owner's comment and UI conventions when editing or creating HTML, CSS, SCSS, JavaScript or Ruby files, or designing an interface."
 ---
 
-# CSS, SCSS and JS rules
+# Frontend conventions
 
 ## Code comments
 

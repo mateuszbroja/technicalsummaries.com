@@ -5,6 +5,7 @@ bookHidden: false
 ---
 
 # Ingestion
+
 ---
 
 `Data ingestion` involves moving data from source systems to storage.
@@ -23,6 +24,7 @@ bookHidden: false
 - Conduct data-quality tests, capture data changes through logs, and perform checks and exception handling.
 
 ## Factors when designing your ingestion architecture:
+
 ---
 
 **Bounded versus unbounded** - Unbounded data is real-time and ongoing, while bounded data is separated into buckets, often by time.
@@ -37,7 +39,8 @@ bookHidden: false
 
 **Reliability and durability** - Reliability requires high uptime and failover, while durability prevents data loss or corruption. To avoid permanent data loss, redundancy and self-healing are necessary.
 
-**Payload** -  refers to the dataset being ingested. Payload characteristics:
+**Payload** - refers to the dataset being ingested. Payload characteristics:
+
 - `Kind` refers to type and format, with type influencing the way data is expressed in bytes and file extensions.
 - `Shape` describes dimensions, such as tabular, JSON, unstructured text, and images.
 - `Size` refers to the number of bytes in the payload.
@@ -47,6 +50,7 @@ bookHidden: false
 **Push versus pull versus poll patterns** - Push strategy sends data from the source to the target, while pull strategy has the target directly read from the source. Polling periodically checks for changes and pulls data when changes are detected.
 
 ## Batch Ingestion Considerations
+
 ---
 
 **Time-based or Size-based** - Time-interval batch ingestion processes data once a day for daily reporting, while size-based batch ingestion cuts data into blocks for future processing in a data lake.
@@ -61,8 +65,8 @@ bookHidden: false
 
 **Data Migration** - Migrating data to a new database or environment is typically not straightforward, requiring bulk data transfer. File or object storage can serve as an excellent intermediate stage for transferring data.
 
-
 ## Message and Stream Ingestion Considerations
+
 ---
 
 **Schema Evolution** - Schema evolution is common in event data. A schema registry can version changes, while a dead-letter queue can help investigate unhandled events.
@@ -81,14 +85,14 @@ bookHidden: false
 
 **Location** - Integrating streaming across several locations can enhance redundancy. As a general rule, the closer your ingestion is to where the data originates, the better your bandwidth and latency.
 
-
 ## Ways to Ingest Data
+
 ---
 
 - `Direct Database Connection`: Data can be pulled from databases for ingestion using `ODBC` or `JDBC`, but they struggle with nested data and sending data as rows. Some databases support native file export, while cloud data warehouses provide direct REST APIs for ingestion.
 
 - `Change data capture (CDC)` ingests changes from a source database system. Batch-oriented CDC queries the table for updated rows since a specified time. Continuous CDC reads the log and sends events to a target in real-time.
-  
+
 - APIs
 
 - Message Queues and Event-Streaming Platforms
@@ -103,7 +107,7 @@ bookHidden: false
 
 - Shell
 
-- `SSH` can be used for file transfer with SCP and for secure connections to databases through SSH tunnels. To connect to a database, a remote machine first opens an SSH tunnel connection to a bastion host, which connects to the database. This helps keep databases isolated and secure. `SFTP` and `SCP` are secure file-exchange protocols that run over an SSH connection. They are commonly used for transferring files between systems securely. 
+- `SSH` can be used for file transfer with SCP and for secure connections to databases through SSH tunnels. To connect to a database, a remote machine first opens an SSH tunnel connection to a bastion host, which connects to the database. This helps keep databases isolated and secure. `SFTP` and `SCP` are secure file-exchange protocols that run over an SSH connection. They are commonly used for transferring files between systems securely.
 
 - Webhooks (reverse API) - webhook-based data ingestion can be difficult to maintain and inefficient.
 

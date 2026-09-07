@@ -1,9 +1,9 @@
 ---
-paths:
-  - "**/*.{csv,tsv}"
+name: tabular-files
+description: "Apply the owner's CSV and TSV conventions when writing, exporting or editing delimited files. Use a proper CSV library and preserve records."
 ---
 
-# CSV and TSV rules
+# Tabular files
 
 - Always wrap every field in double quotes, even numbers and empty fields; escape a literal quote by doubling it (`""`), never with a backslash.
 - UTF-8, a header row, and the same field count in every row.

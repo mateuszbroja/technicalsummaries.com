@@ -1,18 +1,23 @@
-# Coding rules
+---
+name: coding-practices
+description: "Apply the owner's implementation and review conventions when writing, changing, debugging or reviewing code. Read before implementation, including new files."
+---
 
-Generic working rules for the AI. They define how we build, regardless of the task and the repo. Hard safety rules live in [hard_safety_rules.md](hard_safety_rules.md), the git flow in [git_rules.md](git_rules.md) - both always apply. Language- and format-specific rules live in [per_extension/](per_extension/).
+# Coding practices
+
+Use the shared global instructions for permission, Git and evidence rules. These conventions apply to implementation and code review.
 
 ## Environment
 
-- Python always runs through conda. Default environment: `conda activate base` - a project may name a different one, otherwise base it is.
-- Always call `python`, never `python3`. On this machine `python` exists only in conda, while `python3` resolves to Homebrew/system pythons that miss the packages.
+- On the owner's Mac, Python runs through conda. Default: `conda activate base`, unless the project names another environment. In a remote container use its provisioned Python interpreter; do not assume the Mac conda path exists.
+- On the Mac call `python`, never the system `python3`. On that machine `python` exists only in conda, while `python3` resolves to Homebrew/system pythons that miss the packages.
 - When `conda activate` does not stick (fresh non-interactive shell), call the binary directly: `/opt/miniconda3/bin/python`.
 - Remote containers hold several repos side by side (`/home/user/notedrop`, `/home/user/meta-repo`, ...) and the shell cwd can reset between commands. `cd` into the right repo first or use absolute paths. `No such file or directory` on a repo-relative path that should exist means wrong working directory, not a missing file.
-- Rules and skills are copies managed by meta-repo AI_SYNC.md. Edit the source in meta-repo and synchronize. If a required copy is missing, read its source from the attached meta-repo or report the missing source; never assume another repository is attached.
+- Skills and instruction copies are selected in meta-repo ai_sync.yaml. Edit the source in meta-repo and synchronize. If a required copy is missing, read its source from the attached meta-repo or report the missing source; never assume another repository is attached.
 
 ## No guessing
 
-- Never state what you have not verified against a file you actually read this session. No assumptions, no `probably`, no memory of how it used to be.
+- Do not state assumptions as existing facts. Verify factual claims against sources read in this session.
 - If you cannot verify something: verify it, leave it out, or mark it `UNVERIFIED` explicitly. A wrong line is worse than a missing one.
 - Use a reasonable assumption for routine implementation choices and state it when it affects the result. Ask only when missing information changes the outcome materially. Continue independent work while waiting.
 - Read deeply before writing. Understand the whole path, not just the entry point, even when the change is small.
@@ -41,7 +46,7 @@ Generic working rules for the AI. They define how we build, regardless of the ta
 
 ### Layer instructions
 
-- Keep global rules for non-negotiable safety, permission, and workflow constraints. Put format-specific conventions in path-scoped rules.
+- Keep global rules for non-negotiable safety, permission, and workflow constraints. Load the matching format-specific skill before editing or creating files.
 - Follow the verification scope requested by the user. Do not add CI or tests merely to verify a documentation or configuration change.
 
 ### Read like the repo

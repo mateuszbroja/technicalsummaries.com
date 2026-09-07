@@ -1,9 +1,9 @@
 ---
-paths:
-  - "**/*.md"
+name: document-editing
+description: "Apply the owner's full documentation and Markdown conventions when creating or editing Markdown files, including ordinary small edits. A separate prose audit is used only when explicitly requested."
 ---
 
-# Markdown rules
+# Document editing
 
 Scope: only markdown documents versioned in git (nothing matched by `.gitignore`). Unversioned docs are touched solely on an exact instruction from the user - then these rules apply to them too. Generic - applies to every repo this file is copied into. These rules apply equally to writing new markdown and to editing existing documents. If the user provided contradictory specific instructions - apply the user's ones and keep the rules from here for everything else.
 
@@ -12,7 +12,7 @@ Scope: only markdown documents versioned in git (nothing matched by `.gitignore`
 - Read every target file in full before changing it. A search result or a diff excerpt is not a substitute for the document.
 - Leave generated, vendored, archived and legacy documents alone unless the user explicitly includes them.
 - When passages repeat a rule, keep its clearest authoritative statement and link to it elsewhere. Preserve every unique requirement.
-- The Lucid prose rules apply to chat replies, files, documentation, commit messages, PR bodies and user-facing strings. Read the distributed [prose_style.md](../prose_style.md) when authoring prose.
+- The Lucid prose instructions apply to every authored surface. Use the style already loaded by the runtime, or read `.ai/lucid.md` in the target repository when unavailable.
 
 - Never create new `.md` documents (summaries, reports, notes) unless explicitly asked.
 - Edit, do not rewrite. Changing a large share of a document (even ~30%) is fine when the task needs it, but never rewrite or restructure the whole file unless explicitly asked.
@@ -39,7 +39,7 @@ Outside code blocks, replace with plain equivalents:
 
 These replacements never apply inside code blocks (`` ``` `` fences), inline code (`backticks`), URLs, or link targets - leave those exactly as written there.
 
-Emojis only when they are the content itself (e.g. a doc about emoji), never as decoration or to make text easier to read. Use plain warnings in chat too, as defined in [chat_output_rules.md](../chat_output_rules.md).
+Emojis only when they are the content itself (e.g. a doc about emoji), never as decoration or to make text easier to read. Use plain warnings in chat too, as required by the shared global instructions.
 
 ### Headings
 
