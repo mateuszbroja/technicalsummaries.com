@@ -35,9 +35,11 @@ These are the owner's standing instructions. The current user request takes prec
 
 ## Git in personal repositories
 
-- Local Mac sessions leave staging, commits and pushes to the owner unless the current conversation explicitly requests them. `git mv` is allowed for a requested tracked rename. Use plain moves for untracked files.
+- Local Mac sessions leave staging, commits and pushes to the owner unless the current conversation explicitly requests them. `notedrop` is the exception: a session there commits and pushes its own completed changes by default when the task is done. `git mv` is allowed for a requested tracked rename. Use plain moves for untracked files.
+- Commit only the files the session itself changed, staged by explicit path. Other modified or untracked files may belong to another agent or session: leave them uncommitted and never revert, restore, clean or discard them.
+- A signal that Git is off limits for the task, such as `nie komituj`, `bez pusha` or `nic z gitem`, disables `git add`, `git commit` and `git push` entirely for that task, also in `notedrop`. Do the file work and report that nothing was committed.
 - Remote repository sessions deliver on `main` and push completed authorized work. Do not create branches or pull requests. If the hosting environment forces a work branch, integrate the completed work into `main` without losing concurrent changes.
-- Remote sessions fetch and pull `main` before work. Before every requested push, fetch and integrate upstream changes. Never overwrite another session's work. API writes must use fresh file SHAs and reconcile a conflict before retrying.
+- Remote sessions fetch and pull `main` before work. Before every push, requested or by default, fetch and integrate upstream changes with `git pull --rebase --autostash` so foreign uncommitted changes survive. Never overwrite another session's work. API writes must use fresh file SHAs and reconcile a conflict before retrying.
 - Commit messages are one line: the known model prefix and a plain description. Use `codex:` or `claude:` if the precise model name is unavailable. Do not inspect history merely to learn a prefix.
 - Do not run `git status`, `git log` or `git diff` as routine verification. Use them for a concrete repository-state problem or an authorized publication workflow. Re-read edited files on disk to verify their contents.
 
