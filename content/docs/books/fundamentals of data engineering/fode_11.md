@@ -8,7 +8,7 @@ bookHidden: false
 
 ---
 
-## The Data Engineering Lifecycle Isn’t Going Away
+## The Data Engineering Lifecycle Isn't Going Away
 
 ---
 
