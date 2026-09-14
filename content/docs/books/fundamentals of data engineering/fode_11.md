@@ -18,7 +18,7 @@ The notion that simpler tools and practices will lead to the demise of data engi
 
 ---
 
-SaaS-managed services have made it possible for all companies to do data engineering by removing the complexity of understanding big data systems that previously required a large team and significant resources to deploy in the 2000s. Off-the-shelf` data connectors` like `Fivetran` and `Airbyte` save time and resources for data engineers,
+SaaS-managed services have made it possible for all companies to do data engineering by removing the complexity of understanding big data systems that previously required a large team and significant resources to deploy in the 2000s. Off-the-shelf`data connectors` like `Fivetran` and `Airbyte` save time and resources for data engineers,
 
 ## The Cloud-Scale Data OS and Improved Interoperability
 
@@ -34,7 +34,7 @@ The next evolution of cloud data operating systems will focus on higher levels o
 
 ---
 
-Simplification and best practices will make data engineering more _enterprisey_, but this only refers to the good aspects of data management and governance. **The golden age of _enterprisey_ data management tools is currently ongoing**, with technology becoming more accessible and presenting opportunities for data engineers to focus on data management and DataOps.
+Simplification and best practices will make data engineering more *enterprisey*, but this only refers to the good aspects of data management and governance. **The golden age of *enterprisey* data management tools is currently ongoing**, with technology becoming more accessible and presenting opportunities for data engineers to focus on data management and DataOps.
 
 ## Titles and Responsibilities Will Morph
 

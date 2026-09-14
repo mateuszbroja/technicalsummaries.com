@@ -8,7 +8,7 @@ bookHidden: false
 
 ---
 
-_Assuming anything that can go wrong will go wrong_
+*Assuming anything that can go wrong will go wrong*
 
 ---
 
@@ -26,7 +26,7 @@ Reliability in distributed systems is approached `probabilistically`. Absolute r
 
 ### Network Issues
 
-Network irregularities can delay, queue indefinitely, or lose messages, making detection challenging. When no response is received from a node, the reason is unclear. The common remedy is a _timeout_, where you stop waiting after a period and assume the response won't arrive. Testing system responses to network issues is crucial. Positive responses from applications confirm successful requests.
+Network irregularities can delay, queue indefinitely, or lose messages, making detection challenging. When no response is received from a node, the reason is unclear. The common remedy is a *timeout*, where you stop waiting after a period and assume the response won't arrive. Testing system responses to network issues is crucial. Positive responses from applications confirm successful requests.
 
 ---
 
@@ -55,13 +55,13 @@ Defining reality can be challenging due to potentially faulty senses.
 **System Model and Reality**:
 
 - **Models**:
-  - `Synchronous`: Bounded network delay and time drift.
-  - `Partially synchronous`: Sometimes experiences asynchronous properties.
-  - `Asynchronous`: No timing assumptions.
+    - `Synchronous`: Bounded network delay and time drift.
+    - `Partially synchronous`: Sometimes experiences asynchronous properties.
+    - `Asynchronous`: No timing assumptions.
 - **Faults**:
-  - `Crash-stop`: When a node faults, it permanently stops.
-  - `Crash-recovery`: Faulting nodes may appear dead but could recover later.
-  - `Byzantine`: Nodes might intentionally deceive.
+    - `Crash-stop`: When a node faults, it permanently stops.
+    - `Crash-recovery`: Faulting nodes may appear dead but could recover later.
+    - `Byzantine`: Nodes might intentionally deceive.
 
 Most systems fall into partially synchronous and crash recovery categories in the model/fault matrix.
 

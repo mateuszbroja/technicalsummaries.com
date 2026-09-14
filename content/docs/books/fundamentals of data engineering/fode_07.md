@@ -23,7 +23,7 @@ bookHidden: false
 - Handle schema changes, privacy-sensitive data, and monitor uptime, latency, and data volumes.
 - Conduct data-quality tests, capture data changes through logs, and perform checks and exception handling.
 
-## Factors when designing your ingestion architecture:
+## Factors when designing your ingestion architecture
 
 ---
 
