@@ -2,7 +2,7 @@
 
 ## Plans, backlogs, todos
 
-Keep this repository's plans, bugs, ideas and unfinished work in [technicalsummaries_com.md](../notedrop/site/articles/projects/details/technicalsummaries_com.md). Use [manage-tasks-for-all-repos/SKILL.md](../../_shared/meta-repo/configs/ai/skills/global/manage-tasks-for-all-repos/SKILL.md) to maintain its `kind: repos` record, create missing application records and articles, or audit pending work.
+Keep this repository's plans, bugs, ideas and unfinished work in [technicalsummaries_com.md](../../_legacy/notedrop/site/articles/projects/details/technicalsummaries_com.md). Use [manage-tasks-for-all-repos/SKILL.md](../../dropdesk/meta-repo/configs/ai/skills/global/manage-tasks-for-all-repos/SKILL.md) to maintain its `kind: repos` record, create missing application records and articles, or audit pending work.
 
 ## Session instructions
 
