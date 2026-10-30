@@ -11,7 +11,21 @@ title: "03: Designing Good Data Architecture"
 
 `Enterprise architecture` involves designing flexible and reversible systems to support enterprise change through careful trade-off evaluations. It includes subsets like business, technical, application, and data architecture.
 
-`Data architecture` is the design of systems to support the evolving data needs of an enterprise. It includes `operational architecture` (related to people, processes, and technology) and `technical architecture` (details the ingestion, storage, transformation, and serving of data throughout the data engineering lifecycle).
+`Data architecture` is the design of systems to support the evolving data needs of an enterprise, achieved through flexible and reversible decisions based on a careful evaluation of trade-offs. It includes:
+
+- `operational architecture`: the functional requirements of what needs to happen in terms of people, processes, and technology, for example which business processes the data serves and how quickly data must be available,
+- `technical architecture`: how data is ingested, stored, transformed, and served throughout the data engineering lifecycle.
+
+> [!NOTE]
+> Jeff Bezos distinguishes **one-way doors**, decisions that are almost impossible to reverse, from **two-way doors**, decisions that are easy to reverse. Good architecture prefers two-way doors so the organization can iterate quickly.
+
+### Good data architecture
+
+`Good data architecture` serves business requirements with a common, widely reusable set of building blocks while keeping flexibility and making appropriate trade-offs. It is flexible and easily maintainable, and it evolves in response to changes in the business and new technologies.
+
+`Bad data architecture` is tightly coupled, rigid, overly centralized, or uses the wrong tools for the job. It tries to force one-size-fits-all decisions on everyone and ends up as a *big ball of mud*.
+
+The authors base their principles on the AWS Well-Architected Framework and Google Cloud's five principles for cloud-native architecture.
 
 ## Principles of data engineering architecture
 ---
@@ -61,22 +75,32 @@ Loosely coupled system has the following properties:
 3. Changes in one component do not affect others.
 4. Each component is updated separately.
 
+Jeff Bezos's API mandate at Amazon is a classic example: teams had to expose their data and functionality only through service interfaces, which decoupled them and is often credited with paving the way for AWS.
+
 ### Principle 7: Make Reversible Decisions
 
-To keep up with the rapidly changing technological landscape and decoupled data architecture, prioritize selecting the best solutions available today. Remain open to upgrading or adopting better practices as the landscape evolves.
+The data landscape changes fast. Today's best tool can become tomorrow's legacy system, so architecture decisions should be easy to undo.
+
+- Prefer `reversible decisions` (two-way doors) over irreversible ones (one-way doors).
+- Avoid lock-in to a single vendor or tool where you can, so you can swap components as better technology appears.
+- Combined with loose coupling, reversible decisions keep the architecture simple and agile and let it change as tools and business needs change.
 
 ### Principle 8: Prioritize Security
 
-- Use zero-trust security models.
-- Understand the shared responsibility model in cloud computing.
-- Encourage data engineers to act as security engineers too.
+- Move from `hardened-perimeter` security, which trusts everything inside the network boundary, to `zero-trust` security, which verifies every user and system on every access. Perimeter defenses fail against insider attacks and phishing.
+- Understand the `shared responsibility model` of the cloud: the provider secures the cloud, and the customer is responsible for security in the cloud (configuration, access, data).
+- Encourage data engineers to act as security engineers too. Many cloud breaches come from customer-side misconfiguration, such as publicly exposed storage buckets.
 
 ### Principle 9: Embrace FinOps
 
 `FinOps` is a developing financial management discipline and cultural practice in the cloud that promotes collaboration between engineering, finance, technology, and business teams to make data-driven spending decisions, resulting in maximum business value.
 
-## Major Architecture Metrics
+## Major Architecture Concepts
 ---
+
+### Domains and Services
+
+A `domain` is the real-world subject area you are architecting, such as sales, accounting, or shipping. A `service` is a set of functionality whose goal is to accomplish a task, such as an order-processing service. A domain can contain several services, and a service can be shared across domains. To identify the right domains and services, talk to users and stakeholders about what they do and why.
 
 ### Elasticity
 
@@ -87,14 +111,14 @@ To keep up with the rapidly changing technological landscape and decoupled data 
 `Availability` is the percentage of time that an IT service or component is in an operational state.
 
 ```
-availability = (total elapsed time – sum of downtime)/total elapsed time
+availability = (total elapsed time - sum of downtime)/total elapsed time
 ```
 
 For availability **99.99%**, system will be down for 52.6 minutes in a whole year.
 
 ### Reliability
 
-`Reliability`: The system’s probability of meeting defined standards in performing its intended function during a specified interval.
+`Reliability`: The system's probability of meeting defined standards in performing its intended function during a specified interval.
 
 ```
 failure rate = number of failures/total time in service
@@ -118,29 +142,15 @@ The `tightly coupled pattern` involves highly centralized dependencies and workf
 In contrast, the `loosely coupled pattern` involves decentralized domains and services that do not have strict dependencies on each other. To implement this pattern, assign common standards, ownership, responsibility, and accountability to the teams that own their respective domains and services.
 
 
-{{< columns >}}
-**Single-tier architecture**
+{{% columns %}}
+- **Single-tier architecture**
 
-A `single-tier architecture` tightly couples the database and application, residing on a single server such as a laptop or a virtual machine in the cloud. The tightly coupled nature of this architecture means that if the server, database, or application fails, the entire architecture fails. While single-tier architectures are suitable for prototyping and development, they are not recommended for production environments due to the risks of failures.
+  A `single-tier architecture` tightly couples the database and application, residing on a single server such as a laptop or a virtual machine in the cloud. The tightly coupled nature of this architecture means that if the server, database, or application fails, the entire architecture fails. While single-tier architectures are suitable for prototyping and development, they are not recommended for production environments due to the risks of failures.
 
-<--->
+- **Multitier architecture**
 
-**Multitier**
-
-A `multitier` or `n-tier` architecture consists of separate layers such as data, application, business logic, and presentation. These layers are hierarchical, with the lower layers not necessarily dependent on the upper layers but the upper layers depending on the lower layers. The architecture separates data from the application and application from the presentation.
-
-<--->
-
-**Multitier architecture**
-
-A widely used `multitier architecture` is the three-tier architecture, a client-server design consisting of three layers:
-- data, 
-- application/logic, 
-- and presentation. 
-
-Each tier is isolated from the other, allowing for separation of concerns. With this architecture, it is possible to use different technologies within each tier without being monolithically focused on a single technology stack.
-
-{{< /columns >}}
+  A `multitier` or `n-tier` architecture consists of separate layers such as data, application, business logic, and presentation. The layers are hierarchical: the upper layers depend on the lower layers, but not the other way around. The common `three-tier architecture` is a client-server design with data, application/logic, and presentation tiers. Each tier is isolated, which allows separation of concerns and different technologies in each tier.
+{{% /columns %}}
 
 
 
@@ -157,6 +167,11 @@ When considering `multitenancy` in user access, two crucial factors are performa
 
 A `shared-nothing architecture` means that each request is handled by a single node that does not share resources such as memory, disk, or CPU with other nodes. This architecture isolates data and resources to each node. Alternatively, multiple nodes can handle multiple requests and share resources, but this can result in resource contention. Another consideration is whether nodes should share the same disk and memory accessible by all nodes, known as a shared disk architecture. This architecture is useful for shared resources in case of a random node failure.
 
+### Brownfield Versus Greenfield Projects
+
+- `Brownfield projects` refactor or reorganize an existing architecture and are constrained by present and past choices. Instead of a risky "big bang" rewrite, the `strangler pattern` replaces legacy components incrementally, one piece at a time, which keeps decisions reversible.
+- `Greenfield projects` start fresh. The main risks are shiny-object syndrome and resume-driven development: picking the newest technology instead of what serves the project's goals.
+
 ## Event-Driven Architecture
 ---
 
@@ -169,7 +184,7 @@ An `event-driven architecture` comprises components that enable the creation, up
 
 ### Data Warehouse
 
-A `data warehouse` is a centralized data repository used for reporting and analysis, typically containing highly formatted and structured data for analytics use cases. 
+A `data warehouse` is a centralized data repository used for reporting and analysis, typically containing highly formatted and structured data for analytics use cases.
 
 It is an established data architecture with two main characteristics:
 
@@ -207,7 +222,7 @@ In contrast to monolithic data warehouses, **data lakes offer more flexibility a
 
 ### Next-Generation Data Lakes
 
-The `lakehouse` is a new approach to managing data that combines the benefits of data lakes and data warehouses. It incorporates the controls, data management, and data structures typically found in a data warehouse. However, it still allows data to be stored in object storage and supports a variety of query and transformation engines.
+Databricks popularized the `lakehouse`, a new approach to managing data that combines the benefits of data lakes and data warehouses. It incorporates the controls, data management, and data structures typically found in a data warehouse. However, it still allows data to be stored in object storage and supports a variety of query and transformation engines.
 
 One significant feature of the lakehouse is **support for atomicity, consistency, isolation, and durability (ACID) transactions**. This represents a big departure from the original data lake approach, where data was simply poured in and never updated or deleted.
 
@@ -222,7 +237,7 @@ Data engineers had to combine batch and streaming data into a single architectur
 
 Lambda architecture has challenges with managing multiple systems and codebases, making it error-prone and difficult to reconcile. While still popular, other technology and practices have emerged for combining streaming and batch data for analytics.
 
-`Kappa architecture` was proposed as an alternative to Lambda architecture. **It uses a stream-processing platform as the backbone for all data handling**, facilitating a true event-based architecture.
+Jay Kreps proposed the `Kappa architecture` as an alternative to Lambda architecture. **It uses a stream-processing platform as the backbone for all data handling**, facilitating a true event-based architecture.
 
 However, Kappa architecture has not been widely adopted, possibly because streaming is still a mystery for many companies, and it can be complicated and expensive in practice. While some streaming systems can handle huge data volumes, they are complex and expensive, making batch storage and processing more efficient and cost-effective for large historical datasets.
 
@@ -244,7 +259,7 @@ Key components of IoT include:
 
 ### Data Mesh
 
-The `data mesh` is a new approach to data architecture that **addresses the limitations of monolithic platforms** such as centralized data lakes and data warehouses. It seeks to overcome the divide between operational and analytical data by applying the concept of domain-driven design to data architecture.
+Zhamak Dehghani introduced the `data mesh`, a new approach to data architecture that **addresses the limitations of monolithic platforms** such as centralized data lakes and data warehouses. It seeks to overcome the divide between operational and analytical data by applying the concept of domain-driven design to data architecture.
 
 Key components of the data mesh include:
 
@@ -252,3 +267,17 @@ Key components of the data mesh include:
 - Data as a product
 - Self-serve data infrastructure as a platform
 - Federated computational governance
+
+### Other Data Architecture Examples
+
+The authors also mention data fabric, data hub, scaled architecture, metadata-first architecture, event-driven architecture, and the live data stack. Architectures come and go, so focus on the principles behind them, not on the labels.
+
+## Who's Involved in Designing a Data Architecture?
+---
+
+Data architecture is not designed in isolation. Some companies employ dedicated `data architects`, while in many others data engineers take on the architect role themselves.
+
+Data engineers should work alongside a data architect or take on that role, and collaborate with business stakeholders on two questions:
+
+- Which business problems should the architecture solve?
+- Which trade-offs (for example, between a data warehouse and a data lake, or between cloud services) fit the organization's needs?

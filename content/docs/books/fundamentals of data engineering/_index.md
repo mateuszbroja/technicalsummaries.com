@@ -1,8 +1,8 @@
 ---
 bookCollapseSection: true
 weight: 1
+title: "Fundamentals of Data Engineering"
 bookToc: false
-bookComments: false
 
 ---
 

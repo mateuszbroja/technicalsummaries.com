@@ -6,7 +6,15 @@ title: "05: Data Generation in Source Systems"
 # Data Generation in Source Systems
 ---
 
-Understanding the location, generation process, and unique properties of data is critical before working with raw data. It's important to keep in mind that source systems are typically beyond the control of data engineers.
+Understanding the location, generation process, and unique properties of data is critical before working with raw data. Source systems are typically beyond the control of data engineers.
+
+## Sources of Data: How Is Data Created?
+---
+
+- `Analog data` is created in the real world, such as vocal speech, sign language, writing on paper, or playing an instrument. It is often transient.
+- `Digital data` is either converted from analog data (for example, speech-to-text on a phone) or native to a digital system (for example, a credit card transaction on an e-commerce site).
+
+Source systems are often heavily undocumented. Data engineers should study how the source creates data, read its documentation, and talk to the people who own it.
 
 Things to have in mind:
 - **Security:** is data encrypted, access over public internet or VPN, keys token secured, do you trust the source system.
@@ -24,10 +32,7 @@ A file is a sequence of bytes, typically stored on a disk. These files have thei
 - semi-structured (JSON, XML, CSV),
 - unstructured (TXT, CSV).
 
-In structured there are also very popular formats for data processing (especially big data):
-- `Parquet`,
-- ORC,
-- Avro.
+CSV appears in every category because it is a loosely defined format. Popular formats for analytics and big data processing include `Parquet`, `ORC`, and `Avro` (covered in later chapters).
 
 
 ### APIs
@@ -87,7 +92,13 @@ Change data capture (CDC) extracts each change event (insert, update, delete) th
 
 Database logs are essential in data engineering, particularly for change data capture (CDC) to generate event streams from database changes. They capture events and metadata such as the user or system responsible for the event, the details of the event, and the timestamp.
 
-Logs have different encodings. Binary-encoded logs are efficient in terms of space and I/O, while semi-structured logs are portable and machine-readable. Plain-text logs store console output and are the least efficient.
+Logs have different encodings:
+
+- `Binary-encoded logs` use a custom compact format for space efficiency and fast I/O. Database logs are a common example.
+- `Semistructured logs` are text in an object serialization format such as JSON. They are machine-readable and portable, but less efficient than binary logs.
+- `Plain-text (unstructured) logs` store the console output of software. They are hard to parse without custom processing.
+
+Logs also differ in `resolution`, the amount of event data they capture, and in `latency`. Batch logs are written to a file at intervals, while real-time log systems send events to an event-streaming platform as they happen.
 
 ### CRUD
 
@@ -132,8 +143,6 @@ Disadvantages of the insert-only pattern:
 ## Relational databases
 ---
 
-Ideal for storing rapidly changing application state. The challenge for data engineers is to determine how to capture state information over time.
-
 Data is stored in tables. Table has:
 - relations (rows)
 - fields (columns)
@@ -155,7 +164,7 @@ Ideal for storing rapidly changing application state. The challenge for data eng
 ## Non-relational databases: NoSQL
 ---
 
-NoSQL, which stands for not only SQL, refers to a whole class of databases that abandon the relational paradigm. NoSQL describes a universe of “new school” databases, alternatives to relational databases.
+NoSQL, which stands for not only SQL, refers to a whole class of databases that abandon the relational paradigm. NoSQL describes a universe of "new school" databases, alternatives to relational databases.
 
 Dropping relational constraints can improve:
 - performance
@@ -191,7 +200,6 @@ Document store is a specialized key-value store and a nested object; we can usua
 Document store:
 - doesn't support JOINs (data cannot be easily normalized). Ideally, all related data can be stored in the same document
 - doesn't enforce schema or types
-- not ACID compliant
 - generally must run a full scan to extract all data from a collection (you can set up an index to speed up the process)
 
 
@@ -245,14 +253,14 @@ Document store:
 - example: Neo4j
 
 ### Search
-A search database is use to search your data’s complex and straightforward semantic and structural characteristics. Search databases are popular for fast search and retrieval. Queries can be optimized and sped up with the use of indexes. Examples are Elasticsearch, Apache Solr.
+A search database is use to search your data's complex and straightforward semantic and structural characteristics. Search databases are popular for fast search and retrieval. Queries can be optimized and sped up with the use of indexes. Examples are Elasticsearch, Apache Solr.
 
 Use cases exist for a search database:
 - text search (involves searching a body of text for keywords or phrases, matching on exact, fuzzy, or semantically similar matches),
 - log analysis (Log analysis is typically used for anomaly detection, real-time monitoring, security analytics, and operational analytics).
 
 ### Time series
-A time series is a series of values organized by time. Any events that are recorded over time—either regularly or sporadically—are time-series data. Example is Apache Druid. The schema for a time series typically contains a timestamp and a small set of fields.
+A time series is a series of values organized by time. Any events that are recorded over time - either regularly or sporadically - are time-series data. Example is Apache Druid. The schema for a time series typically contains a timestamp and a small set of fields.
 
 A time-series database:
 - optimized for retrieving and statistical processing of time-series data.
@@ -261,6 +269,18 @@ A time-series database:
 - suitable for operational analytics
 - joins are not common, though some quasi time-series databases such as Apache Druid support joins.
 
+
+## Types of Time
+---
+
+Time matters in every source system, especially in streaming. Data passes through several timestamps:
+
+- `Event time`: when the event was generated in the source system, including the timestamp of the original event itself.
+- `Ingestion time`: when the event is ingested from the source into a message queue, cache, memory, object storage, a database, or another place where data is stored.
+- `Process time`: when the data is transformed after ingestion.
+- `Processing time`: how long the data took to process, measured in seconds, minutes, or hours.
+
+Record these timestamps automatically. They let you track latency through the pipeline and handle late-arriving data.
 
 ## Message Queues and Event-Streaming Platforms
 ---
@@ -275,15 +295,16 @@ A message queue is a publish-subscribe mechanism for asynchronous data transmiss
 
 ```json
 {
-	"Key":"Order # 3245",
-	"Value":"SKU 123, purchase price of $3100",
-	"Timestamp":"2023-02-03 06:01:00"
+  "Key":"Order # 3245",
+  "Value":"SKU 123, purchase price of $3100",
+  "Timestamp":"2023-02-03 06:01:00"
 }
 ```
 
 Critical characteristics of an event-streaming platform include `topics`, `stream partitions`, and `fault tolerance and resilience`. Topics are collections of related events, stream partitions allow for parallelism and higher throughput, and fault tolerance ensures the stream remains accessible even if a node goes down.
 
-{{< hint info >}} *Hotspotting* - a disproportionate number of messages delivered to one partition. {{< /hint >}}
+> [!NOTE]
+> *Hotspotting* - a disproportionate number of messages delivered to one partition.
 
 ### Message ordering and delivery
 The order in which messages are created, sent, and received can significantly impact downstream subscribers. Message queues use FIFO (first in, first out) order, but messages may be delivered out of order in distributed systems. Don't assume that messages will be delivered in order unless guaranteed by the message queue technology, and design for out-of-order message delivery.
@@ -302,3 +323,20 @@ Ideally, systems should be `idempotent`. In an idempotent system, the outcome of
 
 The most popular message queues utilized in event-driven applications are horizontally scalable, running across multiple servers.
 
+
+
+## Data Sharing and Third-Party Data
+---
+
+`Data sharing` lets organizations share data with each other, or between departments, through a cloud platform with carefully defined permissions. Cloud data warehouses and some data marketplaces offer this natively. Shared data becomes another source system, but you do not control it.
+
+`Third-party data sources` are companies that provide data to customers through APIs, file transfers, or data sharing, often for a fee. Before ingesting third-party data, evaluate its quality, reliability, update frequency, and licensing terms.
+
+## Whom You'll Work With
+---
+
+Data engineers work closely with the owners of source systems, usually software engineers, DBAs, and DevOps engineers, and with third-party vendors.
+
+- Agree with source system owners on how data will be accessed and how changes to schemas and APIs will be communicated.
+- Consider formal `data contracts`: written agreements between the owner of a source system and the team ingesting its data. A contract defines what data is extracted, by which method (full or incremental), how often, and who to contact about the source and the ingestion.
+- Establish an SLA and SLOs with upstream providers for availability and data quality.

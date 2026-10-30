@@ -1,31 +1,22 @@
 ---
-title: 'technical summaries'
+title: 'Technical summaries'
 type: docs
 bookToc: false
-bookComments: false
 ---
 
-# Introduction
----
-
-Welcome to my technical book summary website.
-
-It was originally created to help my students keep up with all concepts written in books I was suggesting to read. `technicalsummaries.com` contains of concise and valuable summaries of popular and important books and courses across a variety of IT topics (**mostly regarding data engineering**). As a data engineering enthusiast, I understand that not everyone has the time or resources to read every book or take every course that interests them.
-
-
-Books that I have summarized:
-
-- `Fundamentals of Data Engineering` - **Joe Reis**, **Matt Housley**.
-- `Designing Data-Intensive Applications` - **Martin Kleppmann**.
-
-Courses I am currently summarizing:
-
-- `Database Systems` - **Prof. Dr. Jens Dittrich**
+# Technical summaries
 
 ---
 
-I want to emphasize that these summaries are meant to be just that - summaries. While I strive to provide a comprehensive overview, nothing can replace the experience of reading the full book or going through whole course. **My hope is that these summaries will encourage readers to dive deeper into the topics that interest them, and ultimately, purchase the full product** to gain a more complete understanding of the subject matter.
+Chapter-by-chapter summaries of data engineering books. I first wrote them for my students, so they could keep up with the books I recommended.
 
-As a content creator, I take author ownership seriously and make every effort to ensure that my summaries are concise and do not infringe on any copyrights. If you have any concerns, please refer to my `About Me` page for contact information.
+## Books
 
-Thank you for visiting `technicalsummaries.com`!
+- [Fundamentals of Data Engineering]({{< relref "/docs/books/fundamentals of data engineering" >}}) by **Joe Reis** and **Matt Housley** (2022), 11 chapters.
+- [Designing Data-Intensive Applications]({{< relref "/docs/books/designing data-intensive applications" >}}) by **Martin Kleppmann** (2017, first edition), 12 chapters.
+
+---
+
+The summaries help you review a book or decide which chapter to read. They do not replace the books. If a topic matters to you, buy the book and read the full chapter.
+
+All summaries are paraphrased in my own words. If you have a copyright concern, contact me through the links on the [About me]({{< relref "/docs/about me" >}}) page.

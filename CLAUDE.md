@@ -23,10 +23,11 @@ This public repository contains a Hugo site of technical book summaries.
 
 ```sh
 technicalsummaries-com/
-├── config.toml      # Hugo configuration
+├── hugo.toml        # Hugo configuration
+├── netlify.toml     # Netlify build and pinned Hugo version
 ├── archetypes/      # content templates
 ├── content/         # Markdown summaries under docs/
-├── resources/       # Hugo resources
+├── layouts/         # site overrides of the theme, such as GoatCounter
 ├── static/          # static site assets
 ├── themes/          # hugo-book submodule
 └── docs/            # repository operation notes
@@ -34,7 +35,7 @@ technicalsummaries-com/
 
 ## Conventions
 
-Add summaries under content/docs. Keep generated resources and upstream theme files separate from authored content.
+Add summaries under content/docs. Customize the theme only through files in layouts/ and assets/, never inside themes/hugo-book. Use Markdown alerts such as `> [!NOTE]` instead of the deprecated `hint` shortcode.
 
 ## References
 

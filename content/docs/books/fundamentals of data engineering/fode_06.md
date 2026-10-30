@@ -8,37 +8,32 @@ bookHidden: false
 ---
 
 Storage is a fundamental component of the data engineering lifecycle and is essential for all its major stages, including ingestion, transformation, and serving. Layers of storage:
-{{< columns >}}
-**Raw**
+{{% columns %}}
+- **Raw**
 
-- HDD
-- SSD     
-- RAM
-- Networking
-- Serialization
-- Compression
-- CPU
+  - HDD
+  - SSD
+  - RAM
+  - Networking
+  - Serialization
+  - Compression
+  - CPU
 
-<--->
+- **Systems**
 
-**Systems**
+  - HDFS
+  - RDBMS
+  - Cache/memory-based storage
+  - Object storage
+  - Streaming storage
 
-- HDFS
-- RDBMS
-- Cache/memory-based storage
-- Object storage 
-- Streaming storage
+- **Abstractions**
 
-<--->
-
-**Abstractions**
-
-- Data lake
-- Data platfrom
-- Data lakehouse
-- Cloud data warehouse
-
-{{< /columns >}}
+  - Data lake
+  - Data platform
+  - Data lakehouse
+  - Cloud data warehouse
+{{% /columns %}}
 
 
 ## Raw Ingredients of Data Storage
@@ -79,7 +74,7 @@ Serialization is the process of converting data into a standard format for stora
 `Caching` is the concept of storing frequently or recently accessed data in a fast access layer, while less frequently accessed data is stored in cheaper, slower storage. Most practical data systems rely on many cache layers, ranging from CPU caches to RAM, SSDs, and cloud object storage, each with varying performance characteristics.
 
 
-| Storage type     | Data fetch latencya | Bandwidth                                     | Price               |
+| Storage type     | Data fetch latency | Bandwidth                                     | Price               |
 |------------------|---------------------|-----------------------------------------------|---------------------|
 | CPU cache        | 1 nanosecond        | 1 TB/s                                        | N/A                 |
 | RAM              | 0.1 microseconds    | 100 GB/s                                      | $10/GB              |
@@ -107,13 +102,19 @@ Distributed systems pose a challenge for storage and query accuracy because data
 `BASE`:
 - Basically available: Consistency is not guaranteed, but the database will make a best effort to provide consistent data most of the time.
 
-- Soft-state: The state of the transaction is not well defined, and it's unclear whether it is committed or uncommitted.
+- Soft-state: The state of the transaction is fuzzy, and it's uncertain whether it is committed or uncommitted.
 
-- Eventual consistency
+- Eventual consistency: At some point, reading data will return consistent values.
 
 ### File Storage
 
-File Storage is a finite-length stream of bytes that can be appended to and accessed randomly. File storage systems organize files into a directory tree, with metadata containing information about the entities within each directory. Object storage, on the other hand, supports only finite length. When working with file storage paradigms, it is important to be cautious with state and use ephemeral environments as much as possible. Types:
+A `file` is a data entity with specific read, write, and reference characteristics:
+
+- **Finite length**: a file is a finite-length stream of bytes.
+- **Append operations**: bytes can be appended to the file up to the limits of the host storage system.
+- **Random access**: data can be read from or written to any location in the file.
+
+Object storage supports only the first characteristic. File storage systems organize files into a directory tree, and each directory holds metadata about the files and directories it contains. When working with file storage, be cautious with state and use ephemeral environments as much as possible. Types:
 
 - `Local disk storage`
 - `Network-attached storage (NAS)`
@@ -146,6 +147,9 @@ Object storage:
 ### Cache and Memory-Based Storage Systems
 
 RAM provides fast access and transfer speeds, but is susceptible to data loss in case of power outage. RAM-based storage is mostly used for caching, not for data retention.
+
+- `Memcached` is a key-value store designed for caching database query results and API responses.
+- `Redis` is a key-value store with support for more complex data types, such as lists and sets. It offers persistence mechanisms such as snapshotting and journaling, but it can still lose a small amount of data, so it suits data that tolerates some loss.
 
 ### The Hadoop Distributed File System
 
@@ -180,7 +184,7 @@ Cloud data warehouses handle large amounts of text and complex JSON data, but th
 
 ### Data Lake
 
-Data lakes were initially built on Hadoop systems for cheap storage of raw, unprocessed data. However, the trend has shifted towards separating compute and storage and using cloud object storage for long-term retention. Importance of unctionality like schema management and update capabilities, leading to the concept of the data lakehouse.
+Data lakes were initially built on Hadoop systems for cheap storage of raw, unprocessed data. However, the trend has shifted towards separating compute and storage and using cloud object storage for long-term retention. Data lakes lacked functionality such as schema management and update and delete capabilities, which led to the concept of the data lakehouse.
 
 ### Data Lakehouse
 
@@ -205,7 +209,12 @@ Early data warehouses used `row-oriented` RDBMSs. `Columnar-oriented' allows sca
 `Clustering` in a columnar database sorts data by one or a few fields, colocating similar values for improved performance
 
 ### Data Catalog
-A data catalog is a centralized metadata store for all data across an organization. It integrates with various systems and abstractions, allowing users to view their data, queries, and storage.
+A `data catalog` is a centralized metadata store for all data across an organization. It integrates with various systems and abstractions, allowing users to view their data, queries, and storage.
+
+- **Catalog application integration**: data applications should integrate with catalog APIs to handle their metadata and updates directly.
+- **Automated scanning**: catalogs can scan systems, infer metadata, and detect data relationships and sensitive data.
+- **Data portal and social layer**: catalogs often provide a web interface where users search for data and share knowledge, like a wiki.
+- **Use cases**: catalogs support organizational use cases, such as making metadata easily available, and technical use cases, such as schema management for a data lake.
 
 ### Data sharing
 
@@ -219,9 +228,26 @@ Schema provides information about data structure and organization, even for non-
 
 The separation of compute from storage is now a standard pattern in the cloud era, motivated by scalability and data durability. Hybrid approaches that combine colocation and separation are commonly used, such as multitier caching and hybrid object storage. Apache Spark relies on in-memory storage and distributed filesystems, but separating compute and storage in the cloud allows for renting large quantities of memory and releasing it when the job is done.
 
-### Data retention
+`Zero-copy cloning` creates a full copy of an object, such as a table, without physically copying the underlying data. The new object points to the same storage, and only changes are written separately. Snowflake and BigQuery support it. Be careful when deleting data, since a deletion can affect clones that share the same storage.
 
-Data engineers should consider data retention when deciding what data to keep and for how long
+### Data Storage Lifecycle
+
+Data has a storage lifecycle based on how often it is accessed:
+
+- `Hot data` is accessed frequently and needs fast retrieval, for example product recommendations. It is stored on SSD or in memory, which is the most expensive option.
+- `Warm data` is accessed occasionally, for example monthly. Cloud providers offer infrequent-access storage classes that are cheaper to store and more expensive to retrieve.
+- `Cold data` is rarely accessed and is kept for compliance or disaster recovery. Archival storage is very cheap to store and expensive and slow to retrieve.
+
+Many object stores can move data between tiers automatically based on lifecycle policies.
+
+### Data Retention
+
+Data engineers must decide what data to keep and for how long. Consider:
+
+- **Value**: is the data worth keeping? Can it be recreated from upstream sources?
+- **Time**: hot data should be kept only as long as it is needed for fast access. Move older data to cheaper tiers.
+- **Compliance**: regulations such as GDPR and HIPAA can require keeping data for a certain time or deleting it on request.
+- **Cost**: data storage is cheap but not free, and retention policies keep costs under control.
 
 ### Single-Tenant Versus Multitenant Storage
 

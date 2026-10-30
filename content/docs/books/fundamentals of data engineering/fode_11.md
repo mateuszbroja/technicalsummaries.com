@@ -8,60 +8,107 @@ bookHidden: false
 
 ---
 
+The final chapter is the authors' outlook on where the field is heading. Tools change quickly, but the lifecycle, the undercurrents, and the habit of choosing technology by business value stay relevant.
+
 ## The Data Engineering Lifecycle Isn't Going Away
 
 ---
 
-The notion that simpler tools and practices will lead to the demise of data engineers is incorrect. They will continue to be crucial in designing and maintaining data systems, even if the tools become easier to use.
+Some people predict that simpler tools will make data engineering, and data engineers, unnecessary. The authors disagree. Tools get easier, but someone still has to design systems, choose technologies, manage data, and connect the stages of the lifecycle. **The role shifts toward higher levels of abstraction instead of disappearing.** The lifecycle and its undercurrents (security, data management, DataOps, data architecture, orchestration, and software engineering) remain the foundation of the work.
 
-## The Decline of Complexity and the Rise
+## The Decline of Complexity and the Rise of Easy-to-Use Data Tools
 
 ---
 
-SaaS-managed services have made it possible for all companies to do data engineering by removing the complexity of understanding big data systems that previously required a large team and significant resources to deploy in the 2000s. Off-the-shelf`data connectors` like `Fivetran` and `Airbyte` save time and resources for data engineers,
+In the 2000s, big data systems such as Hadoop required large teams and significant resources to deploy and operate. Only big tech companies could afford them.
+
+Today, managed cloud services and SaaS have removed much of that complexity:
+
+- Cloud data warehouses and managed processing engines make petabyte-scale analytics available to companies of any size, with pay-as-you-go pricing.
+- Open source tools have matured and are often offered as managed services.
+- Off-the-shelf `data connectors`, such as `Fivetran` and `Airbyte`, replace custom ingestion code and save engineering time.
+
+> [!NOTE]
+> As complexity declines, data engineers spend less time on low-level infrastructure and more on architecture, data management, and delivering value to the business.
 
 ## The Cloud-Scale Data OS and Improved Interoperability
 
 ---
 
-The next evolution of cloud data operating systems will focus on higher levels of abstraction.
+The authors compare cloud services to an operating system: just as an OS provides standard services (file systems, scheduling, device access) to applications, cloud platforms provide storage, compute, and APIs that data applications build on. The next step is a `cloud-scale data operating system` with higher levels of abstraction and better interoperability between tools.
 
-- Object storage in the cloud and new file formats like `Parquet` and `Avro` will play a significant role in cloud data interchange.
-- A metadata catalog will be crucial in driving automation and simplification.
-- Data orchestration platforms like `Apache Airflow`, `Dagster`, and `Prefect` will become significantly more data-aware.
+Expected building blocks:
 
-## Enterprisey Data Engineering
+- **Object storage and standard file formats**: Cloud object storage and formats such as `Parquet` and `Avro` are becoming the standard layer for exchanging data between systems and clouds.
+- **Metadata catalogs**: A catalog that describes schemas and data across systems will drive automation and simplification. The Hive Metastore played this role in the Hadoop era; newer catalogs aim to work across tools and clouds.
+- **Data-aware orchestration**: Platforms such as `Apache Airflow`, `Dagster`, and `Prefect` will become much more aware of the data they move, including lineage, data quality, and dependencies between datasets rather than only between tasks.
+- **Standard data APIs and interoperability**: Tools will plug into each other more easily, so that a pipeline can be assembled from interchangeable components.
+
+## "Enterprisey" Data Engineering
 
 ---
 
-Simplification and best practices will make data engineering more *enterprisey*, but this only refers to the good aspects of data management and governance. **The golden age of *enterprisey* data management tools is currently ongoing**, with technology becoming more accessible and presenting opportunities for data engineers to focus on data management and DataOps.
+The word "enterprisey" usually describes heavy, bureaucratic enterprise software. The authors use it for the good parts of enterprise practice: data management, governance, data quality, security, and DataOps.
+
+Simpler tools free data engineers from low-level plumbing, so they can focus on these enterprise concerns. **The authors see a golden age of "enterprisey" data management tools**: practices that were once available only to large companies with big budgets are becoming accessible to organizations of all sizes.
 
 ## Titles and Responsibilities Will Morph
 
 ---
 
-As simplicity moves up the stack, the boundaries between data engineering, software engineering, data science, and ML engineering are becoming blurred, and software engineers will need to acquire data engineering skills. Additionally, data engineers will be integrated into application development teams, and the boundaries between application backend systems and data engineering tools will be lowered through deep integration via streaming and event-driven architectures.
+As simplicity moves up the stack, the boundaries between roles blur:
 
-## The Live Data Stack
+- Data scientists will spend less time on infrastructure and data wrangling, and more on analysis and modeling, while ML engineering continues to grow as its own discipline.
+- Software engineers will need a deeper understanding of data engineering, because data and analytics will be built into applications.
+- Data engineers will increasingly work inside application development teams, and the boundary between application backends and data tools will shrink through deep integration via streaming and event-driven architectures.
 
----
+Titles may change, but the work of the data engineering lifecycle will remain.
 
-`The Live Data Stack`, which fuses real-time analytics and ML into applications using streaming technologies, will be the successor to `the Modern Data Stack`. It will democratize real-time technologies, making them accessible to companies of all sizes as easy-to-use cloud-based offerings and opening up new possibilities for creating better user experiences and business value.
-
-## Streaming Pipelines and Real-Time Analytical Databases
-
----
-
-Streaming pipelines and real-time analytical databases will facilitate the move from the MDS to the Live Data Stack. Streaming technologies will continue to see extreme growth, with a focus on the business utility of streaming data. Real-time analytical databases enable fast ingestion and subsecond queries on data. A back-to-the-future moment for data transformations will shift away from `ELT` to a stream, transform, and load (`STL`) approach.
-
-## The Fusion of Data with Applications
+## Moving Beyond the Modern Data Stack, Toward the Live Data Stack
 
 ---
 
-The fusion of application and data layers is the next revolution. Soon, applications will integrate real-time automation and decision making powered by streaming pipelines and ML. Emerging database technologies and feature stores may improve the experience of engineering the live data stack.
+The `modern data stack (MDS)` is a set of cloud-based, plug-and-play, easy-to-use tools: managed connectors, a cloud data warehouse, SQL-based transformations, and BI tools. It made analytics accessible, but it is fundamentally batch-oriented and focused on internal analytics.
 
-## The Tight Feedback Between Applications and ML
+### The Live Data Stack
+
+The authors predict that the `live data stack` will succeed the MDS. It fuses real-time analytics and ML into applications using streaming technologies, covering the whole data lifecycle from application source systems to processing to serving. As with the MDS, these technologies will become available as easy-to-use cloud services, which democratizes real-time capabilities for companies of all sizes and opens new possibilities for user experiences and business value.
+
+### Streaming Pipelines and Real-Time Analytical Databases
+
+Two technologies drive the move from the MDS to the live data stack:
+
+- **Streaming pipelines**: Streaming has grown fast and will keep growing, with the focus shifting from the technology itself to the business value of streaming data.
+- **Real-time analytical databases**: These databases support fast ingestion and subsecond queries on fresh data, so applications and users can query events seconds after they happen.
+
+{{% columns %}}
+- **ELT (modern data stack)**
+
+  Extract data in batches, load it into the warehouse, and transform it there.
+
+- **STL (live data stack)**
+
+  `Stream, transform, and load`: data is transformed continuously while it is in motion and loaded into real-time systems.
+{{% /columns %}}
+
+The authors describe this as a back-to-the-future moment: the industry moves from ELT toward a pattern that resembles ETL again, but executed on streams.
+
+### The Fusion of Data with Applications
+
+Today, application layers and data layers are mostly separate: applications run on OLTP databases, and data flows out to analytics systems. The authors expect **the fusion of application and data layers to be the next revolution**. Applications will integrate real-time automation and decision-making powered by streaming pipelines and ML. Emerging database technologies, real-time feature stores, and similar tools may improve the experience of engineering the live data stack.
+
+### The Tight Feedback Between Applications and ML
+
+The live data stack also tightens the feedback loop between applications and ML. Applications generate data, ML models learn from it in near real time, and model output feeds back into the application. As ML becomes part of most applications, this cycle leads to ever-smarter applications and growing business value.
+
+### Dark Matter Data and the Rise of Spreadsheets
+
+Despite all the sophisticated data systems, the most widely used data platform is the spreadsheet. Huge amounts of analysis happen in spreadsheets, outside of any governed system: the authors call this `dark matter data`. Spreadsheets let users interact with data directly and handle surprisingly complex analytics, but they have limited scale and no shared source of truth.
+
+The authors predict a new class of tools that combines the interactive analytics of a spreadsheet with the backend power of cloud OLAP systems.
+
+## Conclusion
 
 ---
 
-The live data stack will fuse real-time analytics and ML into applications by using streaming technologies. ML will become integrated into most applications, creating a cycle of ever-smarter applications and increasing business value. Despite the rise of sophisticated data systems, spreadsheets remain widely used and handle complex analytics. We predict a new class of tools that combines the interactive analytics capabilities of a spreadsheet with the backend power of cloud OLAP systems will emerge.
+The future belongs to engineers who keep learning. The specific tools will change, but the fundamentals covered in the book (the lifecycle, the undercurrents, sound architecture, and a focus on business value) remain useful. The authors encourage readers to stay curious, join the data community, and contribute to its growth.

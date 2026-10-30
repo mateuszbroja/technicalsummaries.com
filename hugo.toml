@@ -1,0 +1,22 @@
+baseURL = 'https://technicalsummaries.com/'
+locale = 'en-us'
+title = 'Technical summaries'
+theme = 'hugo-book'
+
+disablePathToLower = true
+enableGitInfo = true
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[params]
+  BookTheme = 'auto'
+  BookToC = true
+  BookSection = 'docs'
+  BookSearch = true
+  BookComments = false
+  BookPortableLinks = true
+  BookDateFormat = 'January 2, 2006'
+  BookRepo = 'https://github.com/mateuszbroja/technicalsummaries.com'
+  BookLastChangeLink = '{{ .Site.Params.BookRepo }}/commit/{{ .GitInfo.Hash }}'
+  BookEditLink = '{{ .Site.Params.BookRepo }}/edit/main/{{ .Path }}'
