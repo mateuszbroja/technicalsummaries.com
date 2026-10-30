@@ -10,7 +10,7 @@ enableGitInfo = true
   unsafe = true
 
 [params]
-  BookTheme = 'auto'
+  BookTheme = 'light'
   BookToC = true
   BookSection = 'docs'
   BookSearch = true
